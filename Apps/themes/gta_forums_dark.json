@@ -1,0 +1,32 @@
+{
+  "name": "gta_forums_dark",
+  "description": "Modified version of gta_forums_dark",
+  "category": "🌙 Dark Themes",
+  "author": "X-Seti",
+  "version": "1.0",
+  "colors": {
+    "bg_primary": "#1f2f39",
+    "bg_secondary": "#293f4d",
+    "bg_tertiary": "#18242d",
+    "panel_bg": "#253447",
+    "accent_primary": "#4f6f7A",
+    "accent_secondary": "#657682",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#E2FFE9",
+    "text_accent": "#AFCFAF",
+    "button_normal": "#2f3f49",
+    "button_hover": "#0f0f09",
+    "button_pressed": "#5f6f79",
+    "button_text_color": "#FFFFFF",
+    "border": "#135379",
+    "success": "#00aa00",
+    "warning": "#cc8800",
+    "error": "#cc3333",
+    "action_import": "#008800",
+    "action_export": "#00aa00",
+    "action_remove": "#cc3333",
+    "action_update": "#cc8800",
+    "action_convert": "#8844cc"
+  },
+  "created": "2025-08-12 00:04"
+}

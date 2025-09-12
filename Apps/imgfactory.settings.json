@@ -1,0 +1,30 @@
+{
+  "debug_mode": false,
+  "debug_level": "INFO",
+  "current_theme": "img_factory",
+  "debug_categories": [
+    "IMG_LOADING",
+    "TABLE_POPULATION",
+    "BUTTON_ACTIONS",
+    "FILE_OPERATIONS",
+    "FILTERING",
+    "SIGNAL_SYSTEM"
+  ],
+  "working_gta_folder": "/home/x2/.steamapps/common/GTA Vice City/",
+  "assists_folder": "/home/x2/Desktop/Assists/",
+  "textures_folder": "/home/x2/Desktop/Textures/",
+  "collisions_folder": "/home/x2/Desktop/Collisions/",
+  "generics_folder": "/home/x2/Desktop/Generics/",
+  "water_folder": "/home/x2/Desktop/Water/",
+  "radar_folder": "/home/x2/Desktop/Radartiles/",
+  "gameart_folder": "/home/x2/Desktop/Gameart/",
+  "peds_folder": "/home/x2/Desktop/Peds/",
+  "vehicles_folder": "/home/x2/Desktop/Vehicles/",
+  "weapons_folder": "/home/x2/Desktop/Weapons/",
+  "theme": "gta_forums_dark",
+  "font_family": "Segoe UI",
+  "font_size": 9,
+  "show_tooltips": true,
+  "show_menu_icons": true,
+  "show_button_icons": false
+}
