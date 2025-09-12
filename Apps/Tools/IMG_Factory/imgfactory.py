@@ -11,6 +11,21 @@ import sys
 import os
 from pathlib import Path
 
+# Add Apps to path and initialize debug
+current_dir = Path(__file__).parent
+apps_dir = current_dir / 'Apps'
+if apps_dir.exists():
+    sys.path.insert(0, str(apps_dir))
+
+    # Initialize debug system
+    try:
+        from Debug.import_patcher import patch_debug_imports
+        patch_debug_imports()
+        print("[INIT] ✅ Debug system initialized")
+    except ImportError:
+        print("[WARNING] Debug patcher not found, using fallback")
+
+
 # Add Apps directory to Python path
 apps_dir = Path(__file__).parent.parent.parent
 if str(apps_dir) not in sys.path:
@@ -22,9 +37,9 @@ from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QIcon
 
 # IMG Factory Core imports
-from Shared.enhanced_progress import integrate_with_existing_functions as integrate_progress
+
 from Shared.populate_img_table import populate_img_table
-from Shared.progress_functions import setup_progress_system as setup_legacy_progress
+from Shared.progress_dialog import integrate_progress_dialog_system
 
 # GUI imports
 from Gui.gui_layout import IMGFactoryGUILayout
@@ -53,7 +68,113 @@ from Core.sort_entries import integrate_sort_functions
 from Core.pin import integrate_pin_functions
 
 # Utility imports
+from Apps.Debug.img_debug_functions import img_debugger
+
 from utils.app_settings_system import IMGFactorySettings
+
+def initialize_debug_system():
+    """Initialize debug system for IMG Factory"""
+    try:
+        print("[INIT] Initializing debug system...")
+
+        # Find Apps directory
+        current_dir = Path(__file__).parent if hasattr(Path, '__file__') else Path.cwd()
+
+        # Check possible Apps directory locations
+        apps_locations = [
+            current_dir / 'Apps',
+            current_dir.parent / 'Apps',
+            Path.cwd() / 'Apps'
+        ]
+
+        apps_dir = None
+        for location in apps_locations:
+            if location.exists() and (location / 'Debug').exists():
+                apps_dir = location
+                break
+
+        if not apps_dir:
+            print("[WARNING] Apps/Debug directory not found, using fallback debug")
+            create_fallback_debug()
+            return True
+
+        # Add Apps to Python path
+        apps_str = str(apps_dir)
+        if apps_str not in sys.path:
+            sys.path.insert(0, apps_str)
+            print(f"[INIT] Added {apps_str} to Python path")
+
+        # Import and setup the debug patcher
+        debug_dir = apps_dir / 'Debug'
+        sys.path.insert(0, str(debug_dir))
+
+        # Try to import the debug system
+        try:
+            from Debug.import_patcher import patch_debug_imports
+            if patch_debug_imports():
+                print("[INIT] ✅ Debug system initialized successfully")
+                return True
+        except ImportError:
+            pass
+
+        # Fallback: Create simple debug module
+        create_fallback_debug()
+        return True
+
+    except Exception as e:
+        print(f"[ERROR] Debug initialization failed: {e}")
+        create_fallback_debug()
+        return False
+
+def create_fallback_debug():
+    """Create a simple fallback debug system"""
+    print("[INIT] Creating fallback debug system...")
+
+    # Create a simple debug module
+    import types
+
+    # Simple debugger class
+    class SimpleDebugger:
+        def __init__(self):
+            self.enabled = True
+
+        def debug(self, msg):
+            if self.enabled: print(f"[DEBUG] {msg}")
+        def info(self, msg):
+            if self.enabled: print(f"[INFO] {msg}")
+        def warning(self, msg):
+            if self.enabled: print(f"[WARNING] {msg}")
+        def error(self, msg):
+            if self.enabled: print(f"[ERROR] {msg}")
+        def success(self, msg):
+            if self.enabled: print(f"[SUCCESS] {msg}")
+
+    # Create debug module
+    debug_module = types.ModuleType('debug')
+
+    # Create img_debug_functions submodule
+    img_debug_module = types.ModuleType('debug.img_debug_functions')
+    img_debug_module.img_debugger = SimpleDebugger()
+    img_debug_module.set_col_debug_enabled = lambda x: None
+    img_debug_module.is_col_debug_enabled = lambda: False
+
+    # Add to sys.modules
+    sys.modules['debug'] = debug_module
+    sys.modules['debug.img_debug_functions'] = img_debug_module
+
+    print("[INIT] ✅ Fallback debug system created")
+
+# Initialize debug system immediately
+initialize_debug_system()
+
+# Test the debug system
+try:
+    from debug.img_debug_functions import img_debugger
+    img_debugger.info("IMG Factory debug system ready")
+except ImportError as e:
+    print(f"[ERROR] Debug system test failed: {e}")
+
+print("[INIT] Debug initialization complete")
 
 ##Methods list -
 # __init__
@@ -188,6 +309,9 @@ class IMGFactoryApplication(QMainWindow): #vers 1
             setup_progress_system(self)
             integrate_progress(self)
             
+            # Integrate the progress system
+            integrate_progress_dialog_system(self)
+
             # UI interaction handlers
             setup_ui_interaction_handlers(self)
             integrate_with_existing_handlers(self)
