@@ -1,4 +1,4 @@
-#this belongs in Apps/Gui/drag_drop_system.py - Version: 1
+#this belongs in application/Gui/drag_drop_system.py - Version: 1
 # X-Seti - September12 2025 - IMG Factory 1.5 - Drag Drop System
 
 """

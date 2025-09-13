@@ -1,29 +1,32 @@
 .
-├── Apps
-│   ├── content_area.py
-│   ├── Core
-│   │   ├── build_all.py
-│   │   ├── build.py
-│   │   ├── close.py
-│   │   ├── convert.py
-│   │   ├── core_pin.py
-│   │   ├── create_img.py
+├── application
+│   ├── common
 │   │   ├── DFF.py
-│   │   ├── dialogs.py
-│   │   ├── dump.py
-│   │   ├── export.py
-│   │   ├── export_via.py
-│   │   ├── import_via.py
-│   │   ├── impotr.py
 │   │   ├── __init__.py
-│   │   ├── inverse.py
-│   │   ├── merge.py
 │   │   ├── message_box.py
 │   │   ├── native_gc.py
 │   │   ├── native_ps2.py
 │   │   ├── native_psp.py
 │   │   ├── native_wdgl.py
 │   │   ├── native_xbox.py
+│   │   ├── rw_versions.py
+│   │   └── txd.py
+│   ├── content_area.py
+│   ├── core
+│   │   ├── build_all.py
+│   │   ├── build.py
+│   │   ├── close.py
+│   │   ├── convert.py
+│   │   ├── core_pin.py
+│   │   ├── create_img.py
+│   │   ├── dialogs.py
+│   │   ├── dump.py
+│   │   ├── export.py
+│   │   ├── export_via.py
+│   │   ├── import_via.py
+│   │   ├── impotr.py
+│   │   ├── inverse.py
+│   │   ├── merge.py
 │   │   ├── open.py
 │   │   ├── pin.py
 │   │   ├── refresh.py
@@ -32,13 +35,11 @@
 │   │   ├── remove_via.py
 │   │   ├── rename.py
 │   │   ├── replace.py
-│   │   ├── rw_versions.py
 │   │   ├── save_entry.py
 │   │   ├── select.py
 │   │   ├── sort_via.py
-│   │   ├── split_via.py
-│   │   └── txd.py
-│   ├── Debug
+│   │   └── split_via.py
+│   ├── debug
 │   │   ├── debug_img_functions.py
 │   │   ├── debug_system.py
 │   │   ├── img_debug_functions.py
@@ -46,13 +47,16 @@
 │   │   └── __init__.py
 │   ├── debug_system.py
 │   ├── file_explorer.py
-│   ├── Gui
+│   ├── gui
 │   │   ├── cross_platform_theme.py
 │   │   ├── directory_tree_system.py
 │   │   ├── drag_drop_system.py
 │   │   ├── file_menu_integration.py
 │   │   ├── gui_infobar.py
+│   │   ├── gui_layout.old.py
 │   │   ├── gui_layout.py
+│   │   ├── gui_layout.py-ajt
+│   │   ├── gui_layout.py-old
 │   │   ├── gui_menu.py
 │   │   ├── gui_settings.py
 │   │   ├── ide_dialog.py
@@ -62,10 +66,10 @@
 │   │   ├── pastel_button_theme.py
 │   │   ├── tearoff_integration.py
 │   │   └── ui_interaction_handlers.py
-│   ├── Locale
-│   ├── Logs
+│   ├── locale
+│   ├── logs
 │   ├── responsive_utils.py
-│   ├── Shared
+│   ├── shared
 │   │   ├── enhanced_progress.py
 │   │   ├── img_core_bridge.py
 │   │   ├── img_factory_drag_drop.py
@@ -107,7 +111,7 @@
 │   │   ├── Test Theme_light.json
 │   │   ├── themes_organization.md
 │   │   └── yellow_theme_light.json
-│   ├── Tools
+│   ├── tools
 │   │   ├── COL_Creator
 │   │   │   └── col_creator.py
 │   │   ├── COL_Editor
@@ -123,7 +127,7 @@
 │   │   │   └── schema.json
 │   │   ├── IMG_Creator
 │   │   │   └── img_creator.py
-│   │   ├── IMG_Factory
+│   │   ├── IMG_Editor
 │   │   │   ├── archive_tab.py
 │   │   │   ├── context_menu.py
 │   │   │   ├── core
@@ -137,12 +141,39 @@
 │   │   │   ├── img_controller.py
 │   │   │   ├── IMG_Editor.py
 │   │   │   ├── img_editor_tool.py
+│   │   │   ├── img_integrations.py
+│   │   │   ├── __init__.py
+│   │   │   ├── progress_dialog.py
+│   │   │   ├── ui_components.py
+│   │   │   └── ui_interaction_handlers.py
+│   │   ├── IMG_Factory
+│   │   │   ├── archive_tab.py
+│   │   │   ├── context_menu.py
+│   │   │   ├── core
+│   │   │   │   ├── Core.py
+│   │   │   │   ├── Entries_and_Selection.py
+│   │   │   │   ├── File_Operations.py
+│   │   │   │   ├── IMG_Operations.py
+│   │   │   │   ├── Import_Export_img_editor.py
+│   │   │   │   ├── import_export.py
+│   │   │   │   └── __init__.py
+│   │   │   ├── drag_drop_handler.py
+│   │   │   ├── img_controller.py
+│   │   │   ├── IMG_Editor.py
+│   │   │   ├── img_editor_tool.py
 │   │   │   ├── img_factory_debug.log
 │   │   │   ├── imgfactory.py
 │   │   │   ├── imgfactory.py-old
 │   │   │   ├── imgfactory.settings.json
 │   │   │   ├── img_integrations.py
 │   │   │   ├── __init__.py
+│   │   │   ├── logs
+│   │   │   │   ├── debug_session_20250913_161545.log
+│   │   │   │   ├── debug_session_20250913_162023.log
+│   │   │   │   ├── debug_session_20250913_162737.log
+│   │   │   │   ├── debug_session_20250913_163555.log
+│   │   │   │   ├── debug_session_20250913_163716.log
+│   │   │   │   └── debug_session_20250913_173538.log
 │   │   │   ├── progress_dialog.py
 │   │   │   ├── ui_components.py
 │   │   │   └── ui_interaction_handlers.py
@@ -152,6 +183,7 @@
 │   │   ├── RW_Analyze
 │   │   │   ├── RW_Analyze_core.py
 │   │   │   └── RW_Analyze.py
+│   │   ├── tool_registry.py
 │   │   ├── TXD_Converter
 │   │   │   └── txd_converter.py
 │   │   ├── TXD_Editor
@@ -317,6 +349,7 @@
 │   │   └── update_ui_for_loaded_img.py
 │   ├── unix_launcher.sh
 │   └── windows_launcher.bat
+├── setup_pyqt6_qt3d.sh
 └── tree.git
 
-41 directories, 279 files
+45 directories, 308 files

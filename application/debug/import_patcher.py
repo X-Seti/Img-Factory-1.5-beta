@@ -1,9 +1,9 @@
-#this belongs in Apps/Debug/import_patcher.py - Version: 1
+#this belongs in application/Debug/import_patcher.py - Version: 1
 # X-Seti - September12 2025 - IMG Factory 1.5 - Debug Import Patcher
 
 """
-Debug Import Patcher - Makes Apps/Debug accessible as 'debug' module
-Patches Python's import system to redirect debug imports to Apps/Debug
+Debug Import Patcher - Makes application/Debug accessible as 'debug' module
+Patches Python's import system to redirect debug imports to application/Debug
 Call setup_debug_imports() early in your application startup
 """
 
@@ -28,14 +28,14 @@ class DebugImportFinder: #vers 1
     def find_spec(self, fullname, path, target=None): #vers 1
         """Find module spec for debug imports"""
         if fullname == 'debug':
-            # Redirect 'debug' import to Apps/Debug
+            # Redirect 'debug' import to application/Debug
             init_file = self.apps_debug_path / '__init__.py'
             if init_file.exists():
                 spec = spec_from_file_location('debug', init_file)
                 return spec
         
         elif fullname == 'debug.img_debug_functions':
-            # Redirect 'debug.img_debug_functions' import to Apps/Debug/img_debug_functions.py
+            # Redirect 'debug.img_debug_functions' import to application/Debug/img_debug_functions.py
             functions_file = self.apps_debug_path / 'img_debug_functions.py'
             if functions_file.exists():
                 spec = spec_from_file_location('debug.img_debug_functions', functions_file)
@@ -44,18 +44,18 @@ class DebugImportFinder: #vers 1
         return None
 
 def setup_debug_imports(apps_dir_path=None): #vers 1
-    """Setup debug import redirection from Apps/Debug"""
+    """Setup debug import redirection from application/Debug"""
     try:
-        # Determine Apps directory path
+        # Determine application directory path
         if apps_dir_path is None:
-            # Try to find Apps directory
+            # Try to find application directory
             current_dir = Path.cwd()
             
             # Check common locations
             possible_paths = [
-                current_dir / 'Apps',
-                current_dir.parent / 'Apps',
-                Path(__file__).parent.parent,  # Apps/ (since we're in Apps/Debug/)
+                current_dir / 'application',
+                current_dir.parent / 'application',
+                Path(__file__).parent.parent,  # application/ (since we're in application/Debug/)
             ]
             
             apps_dir = None
@@ -65,18 +65,18 @@ def setup_debug_imports(apps_dir_path=None): #vers 1
                     break
             
             if not apps_dir:
-                print("[WARNING] Could not find Apps directory for debug imports")
+                print("[WARNING] Could not find application directory for debug imports")
                 return False
         else:
             apps_dir = Path(apps_dir_path)
         
-        # Check if Apps/Debug exists
+        # Check if application/Debug exists
         debug_dir = apps_dir / 'Debug'
         if not debug_dir.exists():
             print(f"[WARNING] Debug directory not found: {debug_dir}")
             return False
         
-        # Add Apps directory to Python path if not already there
+        # Add application directory to Python path if not already there
         apps_str = str(apps_dir)
         if apps_str not in sys.path:
             sys.path.insert(0, apps_str)
@@ -102,17 +102,17 @@ def setup_debug_imports(apps_dir_path=None): #vers 1
         return False
 
 def create_debug_module_redirect(): #vers 1
-    """Alternative approach: Create debug module that redirects to Apps/Debug"""
+    """Alternative approach: Create debug module that redirects to application/Debug"""
     try:
-        # Find Apps/Debug directory
+        # Find application/Debug directory
         current_dir = Path.cwd()
         debug_dir = None
         
         # Check possible locations
         possible_paths = [
-            current_dir / 'Apps' / 'Debug',
-            current_dir.parent / 'Apps' / 'Debug',
-            Path(__file__).parent,  # We're in Apps/Debug/
+            current_dir / 'application' / 'Debug',
+            current_dir.parent / 'application' / 'Debug',
+            Path(__file__).parent,  # We're in application/Debug/
         ]
         
         for path in possible_paths:
@@ -121,7 +121,7 @@ def create_debug_module_redirect(): #vers 1
                 break
         
         if not debug_dir:
-            print("[ERROR] Could not find Apps/Debug directory")
+            print("[ERROR] Could not find application/Debug directory")
             return False
         
         # Import the actual debug module

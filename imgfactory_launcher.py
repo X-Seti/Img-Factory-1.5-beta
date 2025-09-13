@@ -25,9 +25,9 @@ import importlib.util
 def print_header(): #vers 1
     """Print application header"""
     print("=" * 60)
-    print("🎮 IMG Factory 1.5 - Python Edition")
-    print("   Advanced IMG Archive Management Tool")
-    print("   X-Seti - 2025")
+    print("IMG Factory 1.5 - Python Edition")
+    print("Advanced IMG Archive Management Tool")
+    print("X-Seti - 2025")
     print("=" * 60)
 
 def check_python_version() -> bool: #vers 1
@@ -84,19 +84,19 @@ def check_project_structure() -> Tuple[bool, List[str]]: #vers 1
     print("📁 Checking project structure...")
     
     current_dir = Path(__file__).parent
-    apps_dir = current_dir / "Apps"
-    imgfactory_dir = apps_dir / "Tools" / "IMG_Factory"
+    application_dir = current_dir / "application"
+    imgfactory_dir = application_dir / "tools" / "IMG_Factory"
     
     required_files = [
-        "Apps/Tools/IMG_Factory/imgfactory.py",
-        "Apps/Core/",
-        "Apps/Gui/"
+        "application/tools/IMG_Factory/imgfactory.py",
+        "application/core/",
+        "application/gui/"
     ]
     
     optional_files = [
-        "Apps/Tools/IMG_Factory/imgfactory.settings.json",
-        "Apps/themes/",
-        "Apps/Debug/debug_system.py"
+        "application/tools/IMG_Factory/imgfactory.settings.json",
+        "application/themes/",
+        "application/debug/debug_system.py"
     ]
     
     missing_required = []
@@ -105,30 +105,30 @@ def check_project_structure() -> Tuple[bool, List[str]]: #vers 1
     # Check main imgfactory.py
     main_file = imgfactory_dir / "imgfactory.py"
     if main_file.exists():
-        print(f"   ✅ Apps/Tools/IMG_Factory/imgfactory.py")
+        print(f"   ✅ application/Tools/IMG_Factory/imgfactory.py")
     else:
-        print(f"   ❌ Apps/Tools/IMG_Factory/imgfactory.py (CRITICAL - main app missing)")
+        print(f"   ❌ application/Tools/IMG_Factory/imgfactory.py (CRITICAL - main app missing)")
         missing_required.append("imgfactory.py")
     
     # Check required directories
     required_dirs = [
-        (apps_dir / "Core", "Core"),
-        (apps_dir / "Gui", "Gui")
+        (application_dir / "core", "core"),
+        (application_dir / "gui", "gui")
     ]
     
     for dir_path, dir_name in required_dirs:
         if dir_path.exists() and dir_path.is_dir():
             file_count = len(list(dir_path.glob("*.py")))
-            print(f"   ✅ Apps/{dir_name}/ ({file_count} Python files)")
+            print(f"   ✅ application/{dir_name}/ ({file_count} Python files)")
         else:
-            print(f"   ❌ Apps/{dir_name}/ (missing directory)")
-            missing_required.append(f"Apps/{dir_name}/")
+            print(f"   ❌ application/{dir_name}/ (missing directory)")
+            missing_required.append(f"application/{dir_name}/")
     
     # Check optional files and directories
     optional_checks = [
         (imgfactory_dir / "imgfactory.settings.json", "Settings file"),
-        (apps_dir / "themes", "Themes directory"),
-        (apps_dir / "Debug" / "debug_system.py", "Debug system")
+        (application_dir / "themes", "Themes directory"),
+        (application_dir / "debug" / "debug_system.py", "Debug system")
     ]
     
     for path, description in optional_checks:
@@ -150,16 +150,16 @@ def setup_python_path(): #vers 1
     print("🛠️  Setting up Python paths...")
     
     current_dir = Path(__file__).parent
-    apps_dir = current_dir / "Apps"
+    application_dir = current_dir / "application"
     
     paths_to_add = [
         current_dir,  # Root directory
-        apps_dir,  # Apps directory
-        apps_dir / "Tools" / "IMG_Factory",  # Main app directory
-        apps_dir / "Core",  # Core functions
-        apps_dir / "Gui",  # GUI components
-        apps_dir / "Debug",  # Debug utilities
-        apps_dir / "themes"  # Theme files
+        application_dir,  # application directory
+        application_dir / "tools" / "IMG_Factory",  # Main app directory
+        application_dir / "core",  # Core functions
+        application_dir / "gui",  # GUI components
+        application_dir / "debug",  # Debug utilities
+        application_dir / "themes"  # Theme files
     ]
     
     for path in paths_to_add:
@@ -222,7 +222,7 @@ def launch_application() -> int: #vers 1
     try:
         # Navigate to the correct directory and import
         current_dir = Path(__file__).parent
-        imgfactory_path = current_dir / "Apps" / "Tools" / "IMG_Factory"
+        imgfactory_path = current_dir / "application" / "tools" / "IMG_Factory"
         
         # Change to IMG Factory directory
         os.chdir(imgfactory_path)
@@ -273,7 +273,7 @@ def show_help(): #vers 1
     print("If IMG Factory won't start:")
     print("1. Ensure Python 3.8+ is installed")
     print("2. Install PyQt6: pip install PyQt6")
-    print("3. Check all files are in Apps/Tools/IMG_Factory/")
+    print("3. Check all files are in application/Tools/IMG_Factory/")
     print("4. Try running: python -m pip install --upgrade PyQt6")
     print("5. Run with verbose output: python -v launch_imgfactory.py")
     print("\n📧 For support: Check project documentation")

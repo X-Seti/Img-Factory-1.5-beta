@@ -16,7 +16,8 @@ class MessageType(Enum):
 
 class MessageBox:
     """
-    Unified message box for displaying errors, warnings, and information, across the application.
+    Unified message box for displaying errors, warnings, and information
+    across the application.
     """
     
     @staticmethod

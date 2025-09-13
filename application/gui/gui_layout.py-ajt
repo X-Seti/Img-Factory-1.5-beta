@@ -1,0 +1,645 @@
+#this belongs in gui/gui_layout.py - Version: 1
+# X-Seti - September13 2025 - IMG Factory 1.5 - Clean GUI Layout with Proper Function Mappings
+
+"""
+Clean GUI Layout System - Maintains original GUI structure with proper function mappings
+Maps buttons to application/Core functions (primary), IMG-Editor Tool (secondary), and Shared functions (fallback)
+Keeps ALL original buttons, even those without functions yet
+"""
+
+import os
+from PyQt6.QtWidgets import (
+    QWidget, QVBoxLayout, QHBoxLayout, QSplitter, QPushButton, QTableWidget, QTextEdit, QProgressBar, QFrame, QLabel, QSpacerItem, QSizePolicy, QGroupBox
+)
+from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtGui import QFont
+
+##Methods list -
+# __init__
+# _apply_button_theme
+# _create_button_with_theme
+# _create_main_layout
+# _create_method_mappings
+# _create_right_panel_with_buttons
+# _create_splitter_layout
+# _create_table_widget
+# _get_button_theme_template
+# _get_entry_buttons_data
+# _get_img_buttons_data
+# _get_options_buttons_data
+# _get_short_text
+# _is_dark_theme
+# _log_missing_method
+# _pin_selected_entries
+# _replace_selected
+# _safe_log
+# _select_all_entries
+# _select_inverse
+# _setup_gui_theme
+# _setup_img_editor_tool
+# _setup_progress_system
+# _sort_entries
+# adapt_buttons_to_width
+# handle_resize_event
+# integrate_gui_layout
+
+##class GUILayout: -
+# __init__
+# _apply_button_theme
+# _create_button_with_theme
+# _create_main_layout
+# _create_method_mappings
+# _create_right_panel_with_buttons
+# _create_splitter_layout
+# _create_table_widget
+# _get_button_theme_template
+# _get_entry_buttons_data
+# _get_img_buttons_data
+# _get_options_buttons_data
+# _get_short_text
+# _is_dark_theme
+# _log_missing_method
+# _pin_selected_entries
+# _replace_selected
+# _safe_log
+# _select_all_entries
+# _select_inverse
+# _setup_gui_theme
+# _setup_img_editor_tool
+# _setup_progress_system
+# _sort_entries
+# adapt_buttons_to_width
+# handle_resize_event
+
+class GUILayout(QWidget): #vers 1
+    """Clean GUI layout system with proper function mappings"""
+    
+    def __init__(self, main_window): #vers 1
+        super().__init__()
+        self.main_window = main_window
+        self.img_editor_tool = None
+        self.main_splitter = None
+        self.table = None
+        self.progress_bar = None
+        self.status_label = None
+        
+        # Button collections
+        self.img_buttons = []
+        self.entry_buttons = []
+        self.options_buttons = []
+        
+        # Initialize IMG Editor Tool
+        self._setup_img_editor_tool()
+        
+        # Create GUI layout
+        self._create_main_layout()
+        
+        # Setup theming
+        self._setup_gui_theme()
+        
+        # Setup progress system
+        self._setup_progress_system()
+
+    def _setup_img_editor_tool(self): #vers 1
+        """Initialize IMG Editor Tool if available"""
+        try:
+            from Tools.img_editor_tool import IMGEditorTool
+            self.img_editor_tool = IMGEditorTool()
+            self._safe_log("✅ IMG Editor Tool initialized")
+        except ImportError:
+            self._safe_log("⚠️ IMG Editor Tool not available")
+            self.img_editor_tool = None
+
+    def _create_main_layout(self): #vers 1
+        """Create the main GUI layout"""
+        main_layout = QHBoxLayout(self)
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.setSpacing(0)
+        
+        # Create splitter
+        self.main_splitter = self._create_splitter_layout()
+        main_layout.addWidget(self.main_splitter)
+
+    def _create_splitter_layout(self): #vers 1
+        """Create the main splitter with table and button panel"""
+        splitter = QSplitter(Qt.Orientation.Horizontal)
+        
+        # Left side: Table widget
+        self.table = self._create_table_widget()
+        splitter.addWidget(self.table)
+        
+        # Right side: Button panel
+        button_panel = self._create_right_panel_with_buttons()
+        splitter.addWidget(button_panel)
+        
+        # Set splitter proportions
+        splitter.setSizes([700, 300])
+        
+        return splitter
+
+    def _create_table_widget(self): #vers 1
+        """Create the main table widget"""
+        table = QTableWidget()
+        table.setAlternatingRowColors(True)
+        table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        return table
+
+    def _create_right_panel_with_buttons(self): #vers 1
+        """Create right panel with all button sections"""
+        panel = QFrame()
+        panel.setFrameStyle(QFrame.Shape.StyledPanel)
+        panel.setMaximumWidth(300)
+        panel.setMinimumWidth(200)
+        
+        layout = QVBoxLayout(panel)
+        layout.setContentsMargins(8, 8, 8, 8)
+        layout.setSpacing(6)
+        
+        # Get method mappings
+        method_mappings = self._create_method_mappings()
+        
+        # === IMG Operations Section ===
+        img_group = QLabel("IMG Operations")
+        img_group.setFont(QFont("Arial", 10, QFont.Weight.Bold))
+        layout.addWidget(img_group)
+        
+        img_buttons_data = self._get_img_buttons_data()
+        for label, method_name, theme_key in img_buttons_data:
+            btn = self._create_button_with_theme(label, method_name, method_mappings, theme_key)
+            self.img_buttons.append(btn)
+            layout.addWidget(btn)
+        
+        layout.addItem(QSpacerItem(20, 10, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed))
+        
+        # === Entry Operations Section ===
+        entry_group = QLabel("Entry Operations")
+        entry_group.setFont(QFont("Arial", 10, QFont.Weight.Bold))
+        layout.addWidget(entry_group)
+        
+        entry_buttons_data = self._get_entry_buttons_data()
+        for label, method_name, theme_key in entry_buttons_data:
+            btn = self._create_button_with_theme(label, method_name, method_mappings, theme_key)
+            self.entry_buttons.append(btn)
+            layout.addWidget(btn)
+        
+        layout.addItem(QSpacerItem(20, 10, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed))
+        
+        # === Selection & Edit Section ===
+        options_group = QLabel("Selection & Edit")
+        options_group.setFont(QFont("Arial", 10, QFont.Weight.Bold))
+        layout.addWidget(options_group)
+        
+        options_buttons_data = self._get_options_buttons_data()
+        for label, method_name, theme_key in options_buttons_data:
+            btn = self._create_button_with_theme(label, method_name, method_mappings, theme_key)
+            self.options_buttons.append(btn)
+            layout.addWidget(btn)
+        
+        layout.addItem(QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding))
+        
+        return panel
+
+    def _get_img_buttons_data(self): #vers 1
+        """Get IMG operations button data - KEEP ALL ORIGINAL BUTTONS"""
+        return [
+            ("Create", "create_img_file", "create_action"),
+            ("Open", "open_img_file", "open_action"), 
+            ("Reload", "reload_img_file", "reload_action"),
+            ("Close", "close_img_file", "close_action"),
+            ("Close All", "close_all_img", "close_action"),
+            ("Rebuild", "rebuild_img", "build_action"),
+            ("Rebuild All", "rebuild_all_img", "build_action"),
+            ("Save Entry", "save_img_entry", "save_action"),
+            ("Merge", "merge_img", "merge_action"),
+            ("Split", "split_img", "merge_action"), 
+            ("Convert", "convert_img_format", "convert_action")
+        ]
+
+    def _get_entry_buttons_data(self): #vers 1
+        """Get Entry operations button data - KEEP ALL ORIGINAL BUTTONS"""
+        return [
+            ("Import", "import_files", "import_action"),
+            ("Import via", "import_files_via", "import_action"),
+            ("Refresh", "refresh_table", "reload_action"),  # Changed from "Update List"
+            ("Export", "export_selected", "export_action"),
+            ("Export via", "export_selected_via", "export_action"),
+            ("Quick Export", "quick_export_selected", "export_action"),
+            ("Remove", "remove_selected", "remove_action"),
+            ("Remove via", "remove_via_entries", "remove_action"),
+            ("Dump", "dump_entries", "export_action")
+        ]
+
+    def _get_options_buttons_data(self): #vers 1
+        """Get Selection & Edit button data - KEEP ALL ORIGINAL BUTTONS"""
+        return [
+            ("Select All", "select_all_entries", "select_action"),
+            ("Select Inverse", "select_inverse", "select_action"),
+            ("Sort Entries", "sort_entries", "select_action"),
+            ("Pin Selected", "pin_selected_entries", "select_action"),
+            ("Rename", "rename_selected", "edit_action"),
+            ("Replace", "replace_selected", "edit_action")
+        ]
+
+    def _create_method_mappings(self): #vers 1
+        """Create comprehensive method mappings with priority system"""
+        method_mappings = {}
+        
+        # === PRIORITY 1: application/Core/ Functions (Button-Ready with Dialogs) ===
+        try:
+            # Import all available Core functions
+            from application.Core.img_creator import create_new_img, open_file_dialog
+            from application.Core.close import close_img_file, close_all_img
+            from application.Core.rebuild import rebuild_current_img_native
+            from application.Core.rebuild_all import show_batch_rebuild_dialog
+            from application.Core.export import export_entries_function
+            from application.Core.dump import dump_entries_function
+            from application.Core.remove import remove_entries_function
+            from application.Core.impotr import import_files_function
+            from application.Core.export_via import export_via_function
+            from application.Core.rename import rename_entry
+            from application.Core.reload import reload_current_file
+            from application.Core.convert import convert_img_format
+            
+            # Map Core functions (PRIMARY)
+            core_mappings = {
+                # File Operations
+                'create_img_file': lambda: create_new_img(self.main_window),
+                'open_img_file': lambda: open_file_dialog(self.main_window),
+                'reload_img_file': lambda: reload_current_file(self.main_window),
+                'close_img_file': lambda: close_img_file(self.main_window),
+                'close_all_img': lambda: close_all_img(self.main_window),
+                'rebuild_img': lambda: rebuild_current_img_native(self.main_window),
+                'rebuild_all_img': lambda: show_batch_rebuild_dialog(self.main_window),
+                'convert_img_format': lambda: convert_img_format(self.main_window),
+                
+                # Entry Operations  
+                'import_files': lambda: import_files_function(self.main_window),
+                'export_selected': lambda: export_entries_function(self.main_window),
+                'export_selected_via': lambda: export_via_function(self.main_window),
+                'dump_entries': lambda: dump_entries_function(self.main_window),
+                'remove_selected': lambda: remove_entries_function(self.main_window),
+                'rename_selected': lambda: rename_entry(self.main_window),
+            }
+            
+            method_mappings.update(core_mappings)
+            self._safe_log(f"✅ Loaded {len(core_mappings)} application/Core functions")
+            
+        except ImportError as e:
+            self._safe_log(f"⚠️ application/Core functions not available: {str(e)}")
+        
+        # === PRIORITY 2: IMG-Editor Tool Functions (Low-level, no dialogs) ===
+        if self.img_editor_tool:
+            try:
+                adapter = self.img_editor_tool.get_adapter()
+                
+                # Only map functions not already defined by Core
+                tool_mappings = {
+                    'save_img_entry': lambda: adapter.save_img(),
+                    'quick_export_selected': lambda: self._handle_quick_export(adapter),
+                }
+                
+                # Add tool mappings only if not already defined
+                for key, func in tool_mappings.items():
+                    if key not in method_mappings:
+                        method_mappings[key] = func
+                
+                self._safe_log(f"✅ Added {len([k for k in tool_mappings.keys() if k not in method_mappings])} IMG-Editor Tool functions")
+                
+            except Exception as e:
+                self._safe_log(f"⚠️ IMG-Editor Tool adapter error: {str(e)}")
+        
+        # === PRIORITY 3: Shared/ Legacy Functions (Fallback) ===
+        try:
+            from Shared.refresh_table_functions import refresh_table
+            from Shared.import_functions import import_files_via_function
+            from Shared.remove_functions import remove_via_entries_function
+            
+            legacy_mappings = {
+                'refresh_table': lambda: refresh_table(self.main_window),
+                'import_files_via': lambda: import_files_via_function(self.main_window),
+                'remove_via_entries': lambda: remove_via_entries_function(self.main_window),
+            }
+            
+            # Add legacy mappings only if not already defined
+            added_legacy = 0
+            for key, func in legacy_mappings.items():
+                if key not in method_mappings:
+                    method_mappings[key] = func
+                    added_legacy += 1
+            
+            self._safe_log(f"✅ Added {added_legacy} Shared legacy functions")
+            
+        except ImportError as e:
+            self._safe_log(f"⚠️ Shared functions not available: {str(e)}")
+        
+        # === PRIORITY 4: GUI-Specific Functions (Table operations) ===
+        gui_mappings = {
+            'select_all_entries': lambda: self._select_all_entries(),
+            'select_inverse': lambda: self._select_inverse(),
+            'sort_entries': lambda: self._sort_entries(),
+            'pin_selected_entries': lambda: self._pin_selected_entries(),
+            'replace_selected': lambda: self._replace_selected(),
+        }
+        
+        method_mappings.update(gui_mappings)
+        
+        # === PRIORITY 5: Not Yet Implemented Functions ===
+        # Keep buttons but log when clicked
+        not_implemented = {
+            'merge_img': lambda: self._log_missing_method('merge_img'),
+            'split_img': lambda: self._log_missing_method('split_img'),
+        }
+        
+        for key, func in not_implemented.items():
+            if key not in method_mappings:
+                method_mappings[key] = func
+        
+        self._safe_log(f"🎯 Total mapped functions: {len(method_mappings)}")
+        
+        return method_mappings
+
+    def _create_button_with_theme(self, label, method_name, method_mappings, theme_key): #vers 1
+        """Create themed button with method connection"""
+        btn = QPushButton(label)
+        btn.setMinimumHeight(32)
+        btn.setMaximumHeight(36)
+        
+        # Apply theme
+        self._apply_button_theme(btn, theme_key)
+        
+        # Connect method
+        if method_name in method_mappings:
+            btn.clicked.connect(method_mappings[method_name])
+        else:
+            btn.clicked.connect(lambda: self._log_missing_method(method_name))
+            self._safe_log(f"⚠️ Method not found: {method_name}")
+        
+        return btn
+
+    def _apply_button_theme(self, btn, theme_key): #vers 1
+        """Apply theme color to button"""
+        colors = self._get_button_theme_template()
+        color = colors.get(theme_key, colors['placeholder'])
+        
+        btn.setStyleSheet(f"""
+            QPushButton {{
+                background-color: {color};
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                padding: 4px 8px;
+                font-weight: bold;
+            }}
+            QPushButton:hover {{
+                background-color: {self._lighten_color(color)};
+                border: 1px solid #999;
+            }}
+            QPushButton:pressed {{
+                background-color: {self._darken_color(color)};
+                border: 1px solid #666;
+            }}
+        """)
+
+    def _get_button_theme_template(self): #vers 1
+        """Get button color template based on theme"""
+        if self._is_dark_theme():
+            return {
+                # Dark Theme Colors
+                'create_action': '#2D3A3A',     # Dark teal
+                'open_action': '#2D3A4F',       # Dark blue
+                'reload_action': '#2D4A2D',     # Dark green
+                'close_action': '#4A3A2D',      # Dark orange
+                'build_action': '#2D4A2D',      # Dark mint
+                'save_action': '#4A2D4A',       # Dark pink
+                'merge_action': '#3A2D4A',      # Dark violet
+                'convert_action': '#4A4A2D',    # Dark yellow
+                'import_action': '#2D4A4F',     # Dark cyan
+                'export_action': '#2D4A2D',     # Dark emerald
+                'remove_action': '#4A2D2D',     # Dark red
+                'edit_action': '#4A3A2D',       # Dark amber
+                'select_action': '#3A4A2D',     # Dark lime
+                'placeholder': '#2A2A2A',       # Dark gray
+            }
+        else:
+            return {
+                # Light Theme Colors
+                'create_action': '#EEFAFA',     # Light teal
+                'open_action': '#E3F2FD',       # Light blue
+                'reload_action': '#E8F5E8',     # Light green
+                'close_action': '#FFF3E0',      # Light orange
+                'build_action': '#E8F5E8',      # Light mint
+                'save_action': '#F8BBD9',       # Light pink
+                'merge_action': '#F3E5F5',      # Light violet
+                'convert_action': '#FFF8E1',    # Light yellow
+                'import_action': '#E1F5FE',     # Light cyan
+                'export_action': '#E8F5E8',     # Light emerald
+                'remove_action': '#FFEBEE',     # Light red
+                'edit_action': '#FFF8E1',       # Light amber
+                'select_action': '#F1F8E9',     # Light lime
+                'placeholder': '#FEFEFE',       # Light gray
+            }
+
+    def _is_dark_theme(self): #vers 1
+        """Check if current theme is dark"""
+        try:
+            # Check if theme system is available
+            from Shared.theme_system import is_dark_theme
+            return is_dark_theme()
+        except ImportError:
+            # Fallback: check palette
+            try:
+                palette = self.main_window.palette()
+                bg_color = palette.color(palette.ColorRole.Window)
+                return bg_color.lightness() < 128
+            except:
+                return False  # Default to light theme
+
+    def _lighten_color(self, hex_color): #vers 1
+        """Lighten a hex color"""
+        try:
+            hex_color = hex_color.lstrip('#')
+            rgb = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+            lighter_rgb = tuple(min(255, int(c * 1.2)) for c in rgb)
+            return f"#{''.join(f'{c:02x}' for c in lighter_rgb)}"
+        except:
+            return hex_color
+
+    def _darken_color(self, hex_color): #vers 1
+        """Darken a hex color"""
+        try:
+            hex_color = hex_color.lstrip('#')
+            rgb = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+            darker_rgb = tuple(max(0, int(c * 0.8)) for c in rgb)
+            return f"#{''.join(f'{c:02x}' for c in darker_rgb)}"
+        except:
+            return hex_color
+
+    def _setup_gui_theme(self): #vers 1
+        """Setup GUI theming"""
+        try:
+            # Apply theme if system is available
+            from Shared.theme_system import get_current_theme
+            theme = get_current_theme()
+            self._safe_log(f"✅ Applied theme: {theme}")
+        except ImportError:
+            self._safe_log("⚠️ Theme system not available, using default colors")
+
+    def _setup_progress_system(self): #vers 1
+        """Setup progress system"""
+        try:
+            from Shared.progress_functions import show_progress, hide_progress
+            self.show_progress = show_progress
+            self.hide_progress = hide_progress
+            self._safe_log("✅ Progress system available")
+        except ImportError:
+            self._safe_log("⚠️ Progress system not available")
+
+    # === GUI-Specific Function Implementations ===
+
+    def _select_all_entries(self): #vers 1
+        """Select all entries in the table"""
+        if self.table:
+            self.table.selectAll()
+            self._safe_log("Selected all table entries")
+
+    def _select_inverse(self): #vers 1
+        """Invert current selection"""
+        if self.table:
+            # Get current selection
+            selected_rows = set(item.row() for item in self.table.selectedItems())
+            
+            # Clear current selection
+            self.table.clearSelection()
+            
+            # Select inverse
+            for row in range(self.table.rowCount()):
+                if row not in selected_rows:
+                    self.table.selectRow(row)
+            
+            self._safe_log(f"Inverted selection: {self.table.rowCount() - len(selected_rows)} rows now selected")
+
+    def _sort_entries(self): #vers 1
+        """Sort entries in table"""
+        if self.table:
+            # Sort by first column (filename)
+            self.table.sortItems(0)
+            self._safe_log("Sorted table entries by filename")
+
+    def _pin_selected_entries(self): #vers 1
+        """Pin selected entries (placeholder implementation)"""
+        if self.table:
+            selected_count = len(self.table.selectedItems()) // self.table.columnCount()
+            self._safe_log(f"Pin function not implemented yet. {selected_count} entries selected.")
+
+    def _replace_selected(self): #vers 1
+        """Replace selected entries (placeholder implementation)"""
+        if self.table:
+            selected_count = len(self.table.selectedItems()) // self.table.columnCount()
+            self._safe_log(f"Replace function not implemented yet. {selected_count} entries selected.")
+
+    # === Handler Functions for IMG-Editor Tool ===
+
+    def _handle_quick_export(self, adapter): #vers 1
+        """Handle quick export using adapter"""
+        try:
+            selected = adapter.get_selected_entries()
+            if not selected:
+                self._safe_log("⚠️ No entries selected for quick export")
+                return
+            
+            # Use adapter's export function
+            adapter.export_selected("/tmp/quick_export")  # Placeholder path
+            self._safe_log(f"Quick exported {len(selected)} entries")
+            
+        except Exception as e:
+            self._safe_log(f"❌ Quick export error: {str(e)}")
+
+    # === Utility Functions ===
+
+    def _safe_log(self, message): #vers 1
+        """Safe logging that works with or without main window"""
+        try:
+            if hasattr(self.main_window, 'log_message'):
+                self.main_window.log_message(message)
+            else:
+                print(f"[GUI Layout] {message}")
+        except Exception:
+            print(f"[GUI Layout] {message}")
+
+    def _log_missing_method(self, method_name): #vers 1
+        """Log when a method is not implemented"""
+        self._safe_log(f"⚠️ Function '{method_name}' not yet implemented")
+
+    def _get_short_text(self, text): #vers 1
+        """Get shortened text for small buttons"""
+        short_map = {
+            "Select All": "All",
+            "Select Inverse": "Inv",
+            "Quick Export": "QExp",
+            "Remove via": "RemV",
+            "Export via": "ExpV",
+            "Import via": "ImpV",
+            "Close All": "ClAll",
+            "Rebuild All": "RbAll",
+            "Save Entry": "Save"
+        }
+        return short_map.get(text, text)
+
+    def adapt_buttons_to_width(self, width): #vers 1
+        """Adapt button text based on panel width"""
+        use_short = width < 250
+        
+        for btn in self.img_buttons + self.entry_buttons + self.options_buttons:
+            if hasattr(btn, 'short_text') and hasattr(btn, 'full_text'):
+                btn.setText(btn.short_text if use_short else btn.full_text)
+
+    def handle_resize_event(self, event): #vers 1
+        """Handle main window resize"""
+        try:
+            # Adapt button panel to new size
+            if self.main_splitter:
+                sizes = self.main_splitter.sizes()
+                if len(sizes) > 1:
+                    self.adapt_buttons_to_width(sizes[1])
+        except Exception as e:
+            self._safe_log(f"⚠️ Resize handling error: {str(e)}")
+
+
+def integrate_gui_layout(main_window) -> bool: #vers 1
+    """Integrate clean GUI layout system into main window"""
+    try:
+        # Create GUI layout
+        gui_layout = GUILayout(main_window)
+        main_window.gui_layout = gui_layout
+        
+        # Set as central widget
+        if hasattr(main_window, 'setCentralWidget'):
+            main_window.setCentralWidget(gui_layout)
+        
+        # Connect resize events
+        if hasattr(main_window, 'resizeEvent'):
+            original_resize = main_window.resizeEvent
+            def new_resize_event(event):
+                original_resize(event)
+                gui_layout.handle_resize_event(event)
+            main_window.resizeEvent = new_resize_event
+        
+        if hasattr(main_window, 'log_message'):
+            main_window.log_message("✅ Clean GUI Layout integrated successfully")
+            main_window.log_message(f"   • {len(gui_layout.img_buttons)} IMG operation buttons")
+            main_window.log_message(f"   • {len(gui_layout.entry_buttons)} Entry operation buttons") 
+            main_window.log_message(f"   • {len(gui_layout.options_buttons)} Selection & Edit buttons")
+            main_window.log_message("   • Priority: application/Core → IMG-Editor Tool → Shared functions")
+        
+        return True
+        
+    except Exception as e:
+        if hasattr(main_window, 'log_message'):
+            main_window.log_message(f"❌ Clean GUI Layout integration failed: {str(e)}")
+        return False
+
+
+# Export functions
+__all__ = [
+    'GUILayout',
+    'integrate_gui_layout'
+]

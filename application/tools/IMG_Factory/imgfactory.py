@@ -1,4 +1,4 @@
-#this belongs in Apps/Tools/IMG_Factory/imgfactory.py - Version: 1
+#this belongs in application/Tools/IMG_Factory/imgfactory.py - Version: 1
 # X-Seti - September12 2025 - IMG Factory 1.5 - Main Application
 
 """
@@ -16,13 +16,13 @@ from PyQt6.QtGui import QAction, QIcon, QFont, QPalette, QColor, QScreen
 
 # IMG Factory Core imports
 
-from Apps.styles import ModernDarkTheme
-from Apps.file_explorer import FileExplorer
-from Apps.tools_panel import ToolsPanel
-from Apps.content_area import ContentArea
-from Apps.status_bar import StatusBarWidget
-from Apps.responsive_utils import get_responsive_manager
-from Apps.debug_system import get_debug_logger, LogLevel, LogCategory, debug_function
+from application.styles import ModernDarkTheme
+from application.file_explorer import FileExplorer
+from application.tools_panel import ToolsPanel
+from application.content_area import ContentArea
+from application.status_bar import StatusBarWidget
+from application.responsive_utils import get_responsive_manager
+from application.debug_system import get_debug_logger, LogLevel, LogCategory, debug_function
 
 from Shared.populate_img_table import populate_img_table
 from Shared.progress_dialog import integrate_progress_dialog_system
@@ -82,14 +82,14 @@ def initialize_debug_system():
     try:
         print("[INIT] Initializing debug system...")
 
-        # Find Apps directory
+        # Find application directory
         current_dir = Path(__file__).parent if hasattr(Path, '__file__') else Path.cwd()
 
-        # Check possible Apps directory locations
+        # Check possible application directory locations
         apps_locations = [
-            current_dir / 'Apps',
-            current_dir.parent / 'Apps',
-            Path.cwd() / 'Apps'
+            current_dir / 'application',
+            current_dir.parent / 'application',
+            Path.cwd() / 'application'
         ]
 
         apps_dir = None
@@ -99,11 +99,11 @@ def initialize_debug_system():
                 break
 
         if not apps_dir:
-            print("[WARNING] Apps/Debug directory not found, using fallback debug")
+            print("[WARNING] application/Debug directory not found, using fallback debug")
             create_fallback_debug()
             return True
 
-        # Add Apps to Python path
+        # Add application to Python path
         apps_str = str(apps_dir)
         if apps_str not in sys.path:
             sys.path.insert(0, apps_str)
@@ -545,7 +545,7 @@ class RenderwareModdingSuite(QMainWindow):
 
         try:
             # Refresh responsive manager with new screen info
-            from Apps.responsive_utils import refresh_responsive_manager
+            from application.responsive_utils import refresh_responsive_manager
             refresh_responsive_manager()
 
             # Update UI scaling
