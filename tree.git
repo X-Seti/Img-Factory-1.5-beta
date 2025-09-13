@@ -1,7 +1,6 @@
 .
 ├── Apps
-│   ├── cc.py
-│   ├── ChangeLog
+│   ├── content_area.py
 │   ├── Core
 │   │   ├── build_all.py
 │   │   ├── build.py
@@ -40,9 +39,13 @@
 │   │   ├── split_via.py
 │   │   └── txd.py
 │   ├── Debug
+│   │   ├── debug_img_functions.py
 │   │   ├── debug_system.py
 │   │   ├── img_debug_functions.py
+│   │   ├── import_patcher.py
 │   │   └── __init__.py
+│   ├── debug_system.py
+│   ├── file_explorer.py
 │   ├── Gui
 │   │   ├── cross_platform_theme.py
 │   │   ├── directory_tree_system.py
@@ -59,9 +62,9 @@
 │   │   ├── pastel_button_theme.py
 │   │   ├── tearoff_integration.py
 │   │   └── ui_interaction_handlers.py
-│   ├── imgfactory.settings.json
 │   ├── Locale
 │   ├── Logs
+│   ├── responsive_utils.py
 │   ├── Shared
 │   │   ├── enhanced_progress.py
 │   │   ├── img_core_bridge.py
@@ -71,6 +74,8 @@
 │   │   ├── populate_img_table.py
 │   │   ├── progress_dialog.py
 │   │   └── theme_integration.py
+│   ├── status_bar.py
+│   ├── styles.py
 │   ├── templates
 │   │   └── new_templates.json
 │   ├── themes
@@ -118,12 +123,29 @@
 │   │   │   └── schema.json
 │   │   ├── IMG_Creator
 │   │   │   └── img_creator.py
-│   │   ├── IMG_Editor
 │   │   ├── IMG_Factory
+│   │   │   ├── archive_tab.py
+│   │   │   ├── context_menu.py
+│   │   │   ├── core
+│   │   │   │   ├── Core.py
+│   │   │   │   ├── Entries_and_Selection.py
+│   │   │   │   ├── File_Operations.py
+│   │   │   │   ├── IMG_Operations.py
+│   │   │   │   ├── Import_Export.py
+│   │   │   │   └── __init__.py
+│   │   │   ├── drag_drop_handler.py
+│   │   │   ├── img_controller.py
+│   │   │   ├── IMG_Editor.py
+│   │   │   ├── img_editor_tool.py
 │   │   │   ├── img_factory_debug.log
 │   │   │   ├── imgfactory.py
 │   │   │   ├── imgfactory.py-old
-│   │   │   └── imgfactory.settings.json
+│   │   │   ├── imgfactory.settings.json
+│   │   │   ├── img_integrations.py
+│   │   │   ├── __init__.py
+│   │   │   ├── progress_dialog.py
+│   │   │   ├── ui_components.py
+│   │   │   └── ui_interaction_handlers.py
 │   │   ├── __init__.py
 │   │   ├── PROJ_Manager
 │   │   │   └── img_project_manager.py
@@ -139,6 +161,7 @@
 │   │   │   ├── __init__.py
 │   │   │   └── TXD_Editor.py
 │   │   └── unified_signal_handler.py
+│   ├── tools_panel.py
 │   ├── tree.git
 │   └── utils
 │       ├── app_settings_system.py
@@ -294,35 +317,6 @@
 │   │   └── update_ui_for_loaded_img.py
 │   ├── unix_launcher.sh
 │   └── windows_launcher.bat
-├── To_port
-│   ├── content_area.py
-│   ├── debug_system.py
-│   ├── file_explorer.py
-│   ├── IMG_Editor
-│   │   ├── archive_tab.py
-│   │   ├── context_menu.py
-│   │   ├── core
-│   │   │   ├── Core.py
-│   │   │   ├── Entries_and_Selection.py
-│   │   │   ├── File_Operations.py
-│   │   │   ├── IMG_Operations.py
-│   │   │   ├── Import_Export.py
-│   │   │   └── __init__.py
-│   │   ├── drag_drop_handler.py
-│   │   ├── img_controller.py
-│   │   ├── IMG_Editor.py
-│   │   ├── img_editor_tool.py
-│   │   ├── img_integrations.py
-│   │   ├── __init__.py
-│   │   ├── progress_dialog.py
-│   │   ├── ui_components.py
-│   │   └── ui_interaction_handlers.py
-│   ├── main_application.py
-│   ├── main.py
-│   ├── responsive_utils.py
-│   ├── status_bar.py
-│   ├── styles.py
-│   └── tools_panel.py
 └── tree.git
 
-44 directories, 282 files
+41 directories, 279 files
