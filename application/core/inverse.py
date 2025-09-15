@@ -12,8 +12,8 @@ from PyQt6.QtWidgets import QTableWidget, QMessageBox
 from PyQt6.QtCore import Qt
 
 # Import from new structure
-from Core.rw_versions import detect_rw_file_format, get_rw_version_name, is_valid_rw_version
-from Shared.progress_functions import show_progress, update_progress, hide_progress
+from application.core.rw_versions import detect_rw_file_format, get_rw_version_name, is_valid_rw_version
+from shared.progress_functions import show_progress, update_progress, hide_progress
 
 ##Methods list -
 # invert_selection

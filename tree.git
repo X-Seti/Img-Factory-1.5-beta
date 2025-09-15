@@ -35,6 +35,7 @@
 │   │   ├── remove_via.py
 │   │   ├── rename.py
 │   │   ├── replace.py
+│   │   ├── rw_versions.py
 │   │   ├── save_entry.py
 │   │   ├── select.py
 │   │   ├── sort_via.py
@@ -52,19 +53,20 @@
 │   │   ├── directory_tree_system.py
 │   │   ├── drag_drop_system.py
 │   │   ├── file_menu_integration.py
+│   │   ├── gui_button_layout.py
 │   │   ├── gui_infobar.py
 │   │   ├── gui_layout.old.py
 │   │   ├── gui_layout.py
-│   │   ├── gui_layout.py-ajt
-│   │   ├── gui_layout.py-old
 │   │   ├── gui_menu.py
 │   │   ├── gui_settings.py
 │   │   ├── ide_dialog.py
 │   │   ├── imgcol_tearoff.py
 │   │   ├── img_tabs_system.py
 │   │   ├── img_ui_components.py
+│   │   ├── panel_manager.py
 │   │   ├── pastel_button_theme.py
 │   │   ├── tearoff_integration.py
+│   │   ├── tear_off.py
 │   │   └── ui_interaction_handlers.py
 │   ├── locale
 │   ├── logs
@@ -135,7 +137,7 @@
 │   │   │   │   ├── Entries_and_Selection.py
 │   │   │   │   ├── File_Operations.py
 │   │   │   │   ├── IMG_Operations.py
-│   │   │   │   ├── Import_Export.py
+│   │   │   │   ├── import_export.py
 │   │   │   │   └── __init__.py
 │   │   │   ├── drag_drop_handler.py
 │   │   │   ├── img_controller.py
@@ -154,7 +156,7 @@
 │   │   │   │   ├── Entries_and_Selection.py
 │   │   │   │   ├── File_Operations.py
 │   │   │   │   ├── IMG_Operations.py
-│   │   │   │   ├── Import_Export_img_editor.py
+│   │   │   │   ├── import_export_img_editor.py
 │   │   │   │   ├── import_export.py
 │   │   │   │   └── __init__.py
 │   │   │   ├── drag_drop_handler.py
@@ -173,7 +175,31 @@
 │   │   │   │   ├── debug_session_20250913_162737.log
 │   │   │   │   ├── debug_session_20250913_163555.log
 │   │   │   │   ├── debug_session_20250913_163716.log
-│   │   │   │   └── debug_session_20250913_173538.log
+│   │   │   │   ├── debug_session_20250913_173538.log
+│   │   │   │   ├── debug_session_20250913_215511.log
+│   │   │   │   ├── debug_session_20250913_221006.log
+│   │   │   │   ├── debug_session_20250913_221440.log
+│   │   │   │   ├── debug_session_20250913_221603.log
+│   │   │   │   ├── debug_session_20250913_223325.log
+│   │   │   │   ├── debug_session_20250913_223511.log
+│   │   │   │   ├── debug_session_20250913_224532.log
+│   │   │   │   ├── debug_session_20250913_224846.log
+│   │   │   │   ├── debug_session_20250913_225445.log
+│   │   │   │   ├── debug_session_20250913_225607.log
+│   │   │   │   ├── debug_session_20250913_225620.log
+│   │   │   │   ├── debug_session_20250913_225755.log
+│   │   │   │   ├── debug_session_20250913_225826.log
+│   │   │   │   ├── debug_session_20250913_225944.log
+│   │   │   │   ├── debug_session_20250913_230508.log
+│   │   │   │   ├── debug_session_20250913_230709.log
+│   │   │   │   ├── debug_session_20250913_231024.log
+│   │   │   │   ├── debug_session_20250913_231220.log
+│   │   │   │   ├── debug_session_20250913_231558.log
+│   │   │   │   ├── debug_session_20250913_231649.log
+│   │   │   │   ├── debug_session_20250913_231741.log
+│   │   │   │   ├── debug_session_20250913_231918.log
+│   │   │   │   ├── debug_session_20250913_232106.log
+│   │   │   │   └── debug_session_20250913_232322.log
 │   │   │   ├── progress_dialog.py
 │   │   │   ├── ui_components.py
 │   │   │   └── ui_interaction_handlers.py
@@ -352,4 +378,4 @@
 ├── setup_pyqt6_qt3d.sh
 └── tree.git
 
-45 directories, 308 files
+45 directories, 334 files

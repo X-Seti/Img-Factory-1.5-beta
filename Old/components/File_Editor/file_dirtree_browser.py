@@ -24,7 +24,7 @@ from PyQt6.QtCore import Qt, pyqtSignal, QThread, pyqtSlot, QTimer, QSettings
 from PyQt6.QtGui import QAction, QIcon, QFont, QKeySequence, QActionGroup
 
 # Import backend classes and functions
-from core.file_dirtree_backend import (
+from application.core.file_dirtree_backend import (
     BrowserSettingsDialog, FilePropertiesDialog, FileSearchDialog, format_file_size_backend, get_file_type_icon_backend, get_file_type_display_backend, get_file_attributes_backend, get_folder_size_quick_backend
 )
 
@@ -1701,7 +1701,7 @@ class FileBrowserWidget(QWidget):
             
             # Use IMG Factory text editor for supported files
             if file_ext in ['.ide', '.ipl', '.dat', '.cfg', '.txt', '.log']:
-                from core.notepad import open_text_file_in_editor
+                from application.core.notepad import open_text_file_in_editor
                 main_window = self.get_main_window()
                 editor = open_text_file_in_editor(file_path, main_window)
                 if editor:
@@ -1724,7 +1724,7 @@ class FileBrowserWidget(QWidget):
     def open_in_notepad(self, file_path): #vers 2
         """Open file in IMG Factory text editor"""
         try:
-            from core.notepad import open_text_file_in_editor
+            from application.core.notepad import open_text_file_in_editor
             main_window = self.get_main_window()
             editor = open_text_file_in_editor(file_path, main_window)
             if editor:

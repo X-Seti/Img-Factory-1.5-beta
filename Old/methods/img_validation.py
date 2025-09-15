@@ -13,7 +13,7 @@ from typing import Optional, Any, List, Dict, Tuple
 from pathlib import Path
 from enum import Enum
 from methods.img_core_classes import IMGFile, IMGEntry, IMGVersion
-from core.rw_versions import is_valid_rw_version
+from application.core.rw_versions import is_valid_rw_version
 
 ##Methods list -
 # validate_img_file_structure

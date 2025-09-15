@@ -48,34 +48,11 @@ from PyQt6.QtWidgets import (
 )
 
 # Qt3D imports
-from PyQt6.Qt3DCore import (
-    QEntity,
-    QTransform,
-    QGeometry,
-    QAttribute,
-    QBuffer as Qt3DBuffer  # Import Qt3D specific buffer
-)
-from PyQt6.Qt3DExtras import (
-    Qt3DWindow,
-    QOrbitCameraController,
-    QPhongMaterial,
-    QDiffuseMapMaterial,
-    QCylinderMesh, # Needed for the axis gizmo
-)
+from PyQt6.Qt3DCore import (QEntity,QTransform,QGeometry,QAttribute,QBuffer as Qt3DBuffer)
+
+from PyQt6.Qt3DExtras import (Qt3DWindow, QOrbitCameraController, QPhongMaterial, QDiffuseMapMaterial, QCylinderMesh)
 from PyQt6.Qt3DRender import (
-    QCamera,
-    QCameraLens,
-    QMesh,
-    QDirectionalLight,
-    QGeometryRenderer,
-    QTexture2D,
-    QTextureImage,
-    QAbstractTexture,
-    QTextureDataUpdate,
-    QDepthTest,
-    QCullFace,
-    QAlphaTest,
-)
+    QCamera, QCameraLens, QMesh, QDirectionalLight, QGeometryRenderer, QTexture2D, QTextureImage, QAbstractTexture, QTextureDataUpdate, QDepthTest, QCullFace, QAlphaTest)
 
 
 

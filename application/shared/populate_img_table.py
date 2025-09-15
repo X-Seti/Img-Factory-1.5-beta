@@ -36,6 +36,11 @@ except ImportError:
 # refresh_img_table
 # update_img_table_selection_info
 
+def populate_img_table_enhanced(main_window, img_file):
+    """Placeholder for enhanced table population"""
+    print("Table population placeholder")
+    return True
+
 def reset_table_styling(main_window): #vers 1
     """Completely reset table styling to default using IMG debug system"""
     try:

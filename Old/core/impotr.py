@@ -16,7 +16,7 @@ from PyQt6.QtWidgets import QFileDialog, QMessageBox
 from methods.tab_aware_functions import validate_tab_before_operation, get_current_file_from_active_tab
 
 # Import existing RW detection systems
-from core.rw_versions import parse_rw_version, get_rw_version_name, is_valid_rw_version
+from application.core.rw_versions import parse_rw_version, get_rw_version_name, is_valid_rw_version
 
 ##Methods list -
 # _add_file_to_img

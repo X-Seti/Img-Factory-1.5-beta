@@ -12,12 +12,12 @@ from PyQt6.QtWidgets import QMessageBox, QFileDialog, QProgressDialog
 from PyQt6.QtCore import Qt
 
 # Import existing components - updated paths
-from Shared.ide_parser_functions import IDEParser, parse_ide_file
-from Core.rw_versions import detect_rw_file_format, get_rw_version_name, is_valid_rw_version
-from Gui.ide_dialog import IDEDialog, create_ide_dialog
-from Shared.progress_functions import show_progress, hide_progress
-from Shared.populate_img_table import refresh_table, populate_img_table_enhanced
-from Shared.populate_col_table import populate_col_table_enhanced
+from shared.ide_parser_functions import IDEParser, parse_ide_file
+from application.core.rw_versions import detect_rw_file_format, get_rw_version_name, is_valid_rw_version
+from gui.ide_dialog import IDEDialog, create_ide_dialog
+from shared.progress_functions import show_progress, hide_progress
+from shared.populate_img_table import refresh_table, populate_img_table_enhanced
+from shared.populate_col_table import populate_col_table_enhanced
 
 ##Methods list -
 # import_files_via_function

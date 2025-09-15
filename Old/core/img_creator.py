@@ -20,7 +20,7 @@ from pathlib import Path
 
 # Import base creation functions from core
 from methods.img_core_classes import IMGVersion
-from core.img_formats import GameSpecificIMGDialog, IMGCreator
+from application.core.img_formats import GameSpecificIMGDialog, IMGCreator
 
 ##Methods list -
 # create_new_img_dialog

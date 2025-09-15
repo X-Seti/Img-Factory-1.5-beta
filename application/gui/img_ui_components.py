@@ -1,4 +1,4 @@
-#this belongs in application/Shared/img_ui_components.py - Version: 1
+#this belongs in application.shared/img_ui_components.py - Version: 1
 # X-Seti - September12 2025 - IMG Factory 1.5 - IMG UI Components
 
 """

@@ -85,7 +85,7 @@ def detect_rw_version_from_entry_data(entry, header_data: bytes) -> bool: #vers 
     try:
         # Import RW version functions
         try:
-            from core.rw_versions import parse_rw_version, get_rw_version_name
+            from application.core.rw_versions import parse_rw_version, get_rw_version_name
         except ImportError:
             return False
         

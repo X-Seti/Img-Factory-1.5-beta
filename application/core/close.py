@@ -43,7 +43,7 @@ def close_img_file(main_window) -> bool: #vers 1
                     return False
                 elif save_choice == QMessageBox.StandardButton.Save:
                     # Save the file before closing
-                    from Core.save_entry import save_img_entry
+                    from application.core.save_entry import save_img_entry
                     if not save_img_entry(main_window):
                         return False
 

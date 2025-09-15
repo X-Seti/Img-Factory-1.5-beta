@@ -1,4 +1,4 @@
-#this belongs in application/Tools/IMG_Factory/imgfactory.py - Version: 1
+#this belongs in application.tools/IMG_Factory/imgfactory.py - Version: 1
 # X-Seti - September12 2025 - IMG Factory 1.5 - Main Application
 
 """
@@ -24,34 +24,35 @@ from application.status_bar import StatusBarWidget
 from application.responsive_utils import get_responsive_manager
 from application.debug_system import get_debug_logger, LogLevel, LogCategory, debug_function
 
-from Shared.populate_img_table import populate_img_table
-from Shared.progress_dialog import integrate_progress_dialog_system
+from shared.populate_img_table import populate_img_table
+from shared.progress_dialog import integrate_progress_dialog_system
 
 # GUI imports
-from Gui.gui_layout import IMGFactoryGUILayout
-from Gui.gui_menu import IMGFactoryMenuBar
-from Gui.gui_settings import apply_theme_to_app
-from Gui.drag_drop_system import setup_drag_drop_system
-from Gui.img_tabs_system import setup_img_tabs_system, integrate_tabs_with_existing_functions
-from Gui.ui_interaction_handlers import setup_ui_interaction_handlers, integrate_with_existing_handlers
-from Gui.img_ui_components import setup_responsive_ui_components, create_img_file_info_panel, create_filter_panel
+from gui.gui_layout import IMGFactoryGUILayout
+from gui.gui_menu import IMGFactoryMenuBar
+#from gui.gui_settings import apply_theme_to_app
+from utils.app_settings_system import apply_theme_to_app
+from gui.drag_drop_system import setup_drag_drop_system
+from gui.img_tabs_system import setup_img_tabs_system, integrate_tabs_with_existing_functions
+from gui.ui_interaction_handlers import setup_ui_interaction_handlers, integrate_with_existing_handlers
+from gui.img_ui_components import setup_responsive_ui_components, create_img_file_info_panel, create_filter_panel
 
 # Core function imports
-from Core.img_core_bridge import integrate_img_editor_core
-from Core.impotr import integrate_import_functions
-from Core.export import integrate_export_functions
-from Core.remove import integrate_remove_functions
-from Core.close import integrate_close_functions
-from Core.save_entry import integrate_save_entry_function
-from Core.reload import integrate_reload_functions
-from Core.build import integrate_build_functions
-from Core.build_all import integrate_build_all_functions
-from Core.replace import integrate_replace_functions
-from Core.merge import integrate_merge_functions
-from Core.split_via import integrate_split_functions
-from Core.convert import integrate_convert_functions
-from Core.sort_entries import integrate_sort_functions
-from Core.pin import integrate_pin_functions
+from application.shared.img_core_bridge import integrate_img_editor_core
+from application.core.impotr import integrate_import_functions
+from application.core.export import integrate_export_functions
+from application.core.remove import integrate_remove_functions
+from application.core.close import integrate_close_functions
+from application.core.save_entry import integrate_save_entry_function
+from application.core.reload import integrate_reload_functions
+from application.core.build import integrate_build_functions
+from application.core.build_all import integrate_build_all_functions
+from application.core.replace import integrate_replace_functions
+from application.core.merge import integrate_merge_functions
+from application.core.split_via import integrate_split_functions
+from application.core.convert import integrate_convert_functions
+from application.core.sort_entries import integrate_sort_functions
+from application.core.pin import integrate_pin_functions
 
 # Utility imports
 
@@ -99,7 +100,7 @@ def initialize_debug_system():
                 break
 
         if not apps_dir:
-            print("[WARNING] application/Debug directory not found, using fallback debug")
+            print("[WARNING] application.debug directory not found, using fallback debug")
             create_fallback_debug()
             return True
 

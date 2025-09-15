@@ -23,7 +23,7 @@ from methods.tab_aware_functions import validate_tab_before_operation, get_curre
 
 # IMG_Editor core integration support
 try:
-    from components.img_integration import IMGArchive, IMGEntry, Import_Export
+    from components.img_integration import IMGArchive, IMGEntry, import_export
     IMG_INTEGRATION_AVAILABLE = True
 except ImportError:
     IMG_INTEGRATION_AVAILABLE = False
@@ -523,8 +523,8 @@ def _backup_original_entry(main_window, file_object, entry) -> bool: #vers 1
             # Use IMG_Editor core to extract
             archive = _convert_to_img_archive(file_object, main_window)
             if archive:
-                from components.img_integration import Import_Export
-                success = Import_Export.export_entry(archive, entry, str(backup_path))
+                from components.img_integration import import_export
+                success = import_export.export_entry(archive, entry, str(backup_path))
                 if not success:
                     return False
         else:

@@ -185,8 +185,8 @@ class IMGArchiveTab(QWidget):
                                 break
 
                         if source_archive:
-                            from .core.Import_Export import Import_Export
-                            exported_path = Import_Export.export_entry(source_archive, entry, output_dir=temp_dir)
+                            from .core.import_export import import_export
+                            exported_path = import_export.export_entry(source_archive, entry, output_dir=temp_dir)
                             exported_files.append(exported_path)
                         else:
                             failed_exports.append(entry.name)

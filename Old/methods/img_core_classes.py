@@ -18,8 +18,8 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import pyqtSignal, Qt
 
 # Import existing RW version functions - KEPT ALL ORIGINAL IMPORTS
-from core.rw_versions import get_rw_version_name, parse_rw_version, get_model_format_version
-# CIRCULAR IMPORT REMOVED: from core.img_platform_detection import detect_img_platform, get_platform_specific_specs, IMGPlatform
+from application.core.rw_versions import get_rw_version_name, parse_rw_version, get_model_format_version
+# CIRCULAR IMPORT REMOVED: from application.core.img_platform_detection import detect_img_platform, get_platform_specific_specs, IMGPlatform
 from debug.img_debug_functions import img_debugger
 
 ##Methods list -
@@ -550,7 +550,7 @@ class IMGFile:
 
             if version == IMGVersion.VERSION_1:
                 # Use Version 1 creator
-                from core.img_version1 import IMGVersion1Creator
+                from application.core.img_version1 import IMGVersion1Creator
                 creator = IMGVersion1Creator()
                 success = creator.create_version_1(output_path, initial_size_mb)
                 if success:
@@ -560,7 +560,7 @@ class IMGFile:
                 
             elif version == IMGVersion.VERSION_2:
                 # Use Version 2 creator
-                from core.img_version2 import IMGVersion2Creator
+                from application.core.img_version2 import IMGVersion2Creator
                 creator = IMGVersion2Creator()
                 success = creator.create_version_2(output_path, initial_size_mb, compression_enabled)
                 if success:
@@ -861,7 +861,7 @@ class IMGFile:
                     print(f"[DEBUG] save_img_file() returned: {success}")
                 else:
                     print(f"[DEBUG] save_img_file method not found, trying backup save...")
-                    from core.save_img_entry import save_img_file_with_backup
+                    from application.core.save_img_entry import save_img_file_with_backup
                     success = save_img_file_with_backup(self)
                     print(f"[DEBUG] save_img_file_with_backup() returned: {success}")
 

@@ -105,9 +105,9 @@ def check_project_structure() -> Tuple[bool, List[str]]: #vers 1
     # Check main imgfactory.py
     main_file = imgfactory_dir / "imgfactory.py"
     if main_file.exists():
-        print(f"   ✅ application/Tools/IMG_Factory/imgfactory.py")
+        print(f"   ✅ application.tools/IMG_Factory/imgfactory.py")
     else:
-        print(f"   ❌ application/Tools/IMG_Factory/imgfactory.py (CRITICAL - main app missing)")
+        print(f"   ❌ application.tools/IMG_Factory/imgfactory.py (CRITICAL - main app missing)")
         missing_required.append("imgfactory.py")
     
     # Check required directories
@@ -273,7 +273,7 @@ def show_help(): #vers 1
     print("If IMG Factory won't start:")
     print("1. Ensure Python 3.8+ is installed")
     print("2. Install PyQt6: pip install PyQt6")
-    print("3. Check all files are in application/Tools/IMG_Factory/")
+    print("3. Check all files are in application.tools/IMG_Factory/")
     print("4. Try running: python -m pip install --upgrade PyQt6")
     print("5. Run with verbose output: python -v launch_imgfactory.py")
     print("\n📧 For support: Check project documentation")

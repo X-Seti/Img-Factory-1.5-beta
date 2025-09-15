@@ -282,14 +282,14 @@ def _rebuild_single_img_in_batch(main_window, img_file, file_path: str) -> bool:
         
         # Import single rebuild function
         try:
-            from Core.build import perform_img_rebuild
+            from application.core.build import perform_img_rebuild
             return perform_img_rebuild(main_window, img_file, file_path)
         except ImportError:
             pass
 
         # Import core rebuild function
         try:
-            from Core.rebuild import rebuild_img_file_core
+            from application.core.rebuild import rebuild_img_file_core
             return rebuild_img_file_core(main_window, img_file)
         except ImportError:
             pass

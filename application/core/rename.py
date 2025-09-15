@@ -12,8 +12,8 @@ from typing import Optional, List, Dict, Any, Tuple
 from PyQt6.QtWidgets import QMessageBox, QInputDialog, QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QListWidget, QListWidgetItem
 
 # Import from new structure
-from Shared.progress_functions import show_progress, update_progress, hide_progress, start_operation, complete_operation
-from Shared.populate_img_table import populate_img_table_enhanced, refresh_table
+from shared.progress_functions import show_progress, update_progress, hide_progress, start_operation, complete_operation
+from shared.populate_img_table import populate_img_table_enhanced, refresh_table
 
 ##Methods list -
 # rename_selected_entry

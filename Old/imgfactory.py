@@ -53,34 +53,34 @@ from debug.col_debug_functions import set_col_debug_enabled
 from debug.unified_debug_functions import integrate_all_improvements, install_debug_control_system
 
 #Core functions.
-from core.img_formats import GameSpecificIMGDialog, IMGCreator
-from core.file_extraction import setup_complete_extraction_integration
-from core.file_type_filter import integrate_file_filtering
-from core.rw_versions import get_rw_version_name
-from core.right_click_actions import integrate_right_click_actions, setup_table_context_menu
-from core.shortcuts import setup_all_shortcuts, create_debug_keyboard_shortcuts
-from core.convert import convert_img, convert_img_format
-from core.img_split import integrate_split_functions
-from core.theme_integration import integrate_theme_system
-from core.img_creator import create_new_img, detect_and_open_file, open_file_dialog, detect_file_type
-from core.clean import integrate_clean_utilities
-from core.close import install_close_functions, setup_close_manager
-from core.export import integrate_export_functions
-from core.impotr import integrate_import_functions #import impotr
-from core.remove import integrate_remove_functions
-from core.export import export_selected_function, export_all_function, integrate_export_functions
-from core.dump import dump_all_function, dump_selected_function, integrate_dump_functions
-from core.import_via import integrate_import_via_functions
-from core.remove_via import integrate_remove_via_functions
-from core.export_via import export_via_function
-from core.rebuild import integrate_rebuild_functions
-from core.rebuild_all import integrate_batch_rebuild_functions
-from core.imgcol_rename import integrate_imgcol_rename_functions
-from core.imgcol_replace import integrate_imgcol_replace_functions
-from core.imgcol_convert import integrate_imgcol_convert_functions
-from core.save_entry import integrate_save_entry_function
-from core.rw_unk_snapshot import integrate_unknown_rw_detection
-#from core.analyze_rw import integrate_rw_analysis_trigger
+from application.core.img_formats import GameSpecificIMGDialog, IMGCreator
+from application.core.file_extraction import setup_complete_extraction_integration
+from application.core.file_type_filter import integrate_file_filtering
+from application.core.rw_versions import get_rw_version_name
+from application.core.right_click_actions import integrate_right_click_actions, setup_table_context_menu
+from application.core.shortcuts import setup_all_shortcuts, create_debug_keyboard_shortcuts
+from application.core.convert import convert_img, convert_img_format
+from application.core.img_split import integrate_split_functions
+from application.core.theme_integration import integrate_theme_system
+from application.core.img_creator import create_new_img, detect_and_open_file, open_file_dialog, detect_file_type
+from application.core.clean import integrate_clean_utilities
+from application.core.close import install_close_functions, setup_close_manager
+from application.core.export import integrate_export_functions
+from application.core.impotr import integrate_import_functions #import impotr
+from application.core.remove import integrate_remove_functions
+from application.core.export import export_selected_function, export_all_function, integrate_export_functions
+from application.core.dump import dump_all_function, dump_selected_function, integrate_dump_functions
+from application.core.import_via import integrate_import_via_functions
+from application.core.remove_via import integrate_remove_via_functions
+from application.core.export_via import export_via_function
+from application.core.rebuild import integrate_rebuild_functions
+from application.core.rebuild_all import integrate_batch_rebuild_functions
+from application.core.imgcol_rename import integrate_imgcol_rename_functions
+from application.core.imgcol_replace import integrate_imgcol_replace_functions
+from application.core.imgcol_convert import integrate_imgcol_convert_functions
+from application.core.save_entry import integrate_save_entry_function
+from application.core.rw_unk_snapshot import integrate_unknown_rw_detection
+#from application.core.analyze_rw import integrate_rw_analysis_trigger
 
 #gui-layout
 from gui.ide_dialog import integrate_ide_dialog
@@ -135,7 +135,7 @@ from methods.img_templates import IMGTemplateManager, TemplateManagerDialog
 def setup_rebuild_system(self): #vers 1
     """Setup hybrid rebuild system with mode selection"""
     try:
-        from core.hybrid_rebuild import setup_hybrid_rebuild_methods
+        from application.core.hybrid_rebuild import setup_hybrid_rebuild_methods
         success = setup_hybrid_rebuild_methods(self)
 
         if success:
@@ -479,7 +479,7 @@ class IMGFactory(QMainWindow):
 
         # File extraction (single call only!)
         try:
-            from core.file_extraction import setup_complete_extraction_integration
+            from application.core.file_extraction import setup_complete_extraction_integration
             setup_complete_extraction_integration(self)
             self.log_message("✅ File extraction integrated")
         except Exception as e:
@@ -536,7 +536,7 @@ class IMGFactory(QMainWindow):
             self.log_message(f"❌ Integration failed: {e}")
 
         try:
-            from core.img_corruption_analyzer import setup_corruption_analyzer
+            from application.core.img_corruption_analyzer import setup_corruption_analyzer
             setup_corruption_analyzer(self)
             self.log_message("🔍 IMG corruption analyzer integrated")
         except Exception as e:
@@ -661,7 +661,7 @@ class IMGFactory(QMainWindow):
             self.log_message("🔍 Starting IMG corruption analysis...")
 
             # Show corruption analysis dialog
-            from core.img_corruption_analyzer import show_corruption_analysis_dialog
+            from application.core.img_corruption_analyzer import show_corruption_analysis_dialog
             result = show_corruption_analysis_dialog(self)
 
             if result:
@@ -669,7 +669,7 @@ class IMGFactory(QMainWindow):
                 report = result['report']
                 fix_options = result['fix_options']
 
-                from core.img_corruption_analyzer import fix_corrupted_img
+                from application.core.img_corruption_analyzer import fix_corrupted_img
                 success = fix_corrupted_img(self.current_img, report, fix_options, self)
 
                 if success:
@@ -695,7 +695,7 @@ class IMGFactory(QMainWindow):
             self.log_message("🔧 Quick fixing IMG corruption...")
 
             # Analyze first
-            from core.img_corruption_analyzer import analyze_img_corruption
+            from application.core.img_corruption_analyzer import analyze_img_corruption
             report = analyze_img_corruption(self.current_img, self)
 
             if 'error' in report:
@@ -731,7 +731,7 @@ class IMGFactory(QMainWindow):
                     'create_backup': True
                 }
 
-                from core.img_corruption_analyzer import fix_corrupted_img
+                from application.core.img_corruption_analyzer import fix_corrupted_img
                 success = fix_corrupted_img(self.current_img, report, quick_fix_options, self)
 
                 if success:
@@ -758,7 +758,7 @@ class IMGFactory(QMainWindow):
             self.log_message("🧹 Cleaning filenames only...")
 
             # Analyze corruption
-            from core.img_corruption_analyzer import analyze_img_corruption
+            from application.core.img_corruption_analyzer import analyze_img_corruption
             report = analyze_img_corruption(self.current_img, self)
 
             if 'error' in report:
@@ -782,7 +782,7 @@ class IMGFactory(QMainWindow):
                 'create_backup': True
             }
 
-            from core.img_corruption_analyzer import fix_corrupted_img
+            from application.core.img_corruption_analyzer import fix_corrupted_img
             success = fix_corrupted_img(self.current_img, report, filename_fix_options, self)
 
             if success:
@@ -809,7 +809,7 @@ class IMGFactory(QMainWindow):
             self.log_message("📄 Generating corruption report...")
 
             # Analyze corruption
-            from core.img_corruption_analyzer import analyze_img_corruption
+            from application.core.img_corruption_analyzer import analyze_img_corruption
             report = analyze_img_corruption(self.current_img, self)
 
             if 'error' in report:
@@ -1642,7 +1642,7 @@ class IMGFactory(QMainWindow):
         """Setup robust tab system during initialization"""
         try:
             # Import and install robust tab system
-            from core.robust_tab_system import install_robust_tab_system
+            from application.core.robust_tab_system import install_robust_tab_system
 
             if install_robust_tab_system(self):
                 self.log_message("✅ Robust tab system ready")
@@ -1817,8 +1817,8 @@ class IMGFactory(QMainWindow):
             self.log_message(f"❌ Error opening file dialog: {str(e)}")
 
     def open_file_dialog(self): #vers 1
-        """Unified file dialog - imported from core"""
-        from core.create_img import open_file_dialog
+        """Unified file dialog - imported from application.core.""
+        from application.core.create_img import open_file_dialog
         return open_file_dialog(self)
 
     def _clean_on_img_loaded(self, img_file: IMGFile): #vers 6
@@ -3142,18 +3142,18 @@ class IMGFactory(QMainWindow):
 
     def export_selected_via(self): #vers 1
         """Export selected entries via IDE file"""
-        from core.exporter import export_via_function
+        from application.core.exporter import export_via_function
         export_via_function(self)
 
     def quick_export_selected(self): #vers 1
         """Quick export selected entries"""
-        from core.exporter import quick_export_function
+        from application.core.exporter import quick_export_function
         quick_export_function(self)
 
     def dump_entries(self): #vers 1
         """Dump all entries"""
         try:
-            from core.exporter import dump_all_function
+            from application.core.exporter import dump_all_function
             dump_all_function(self)
         except Exception as e:
             self.log_message(f"❌ Dump error: {str(e)}")
@@ -3162,7 +3162,7 @@ class IMGFactory(QMainWindow):
     def import_files_via(self): #vers 1
         """Import files via IDE file"""
         try:
-            from core.importer import import_via_function
+            from application.core.importer import import_via_function
             import_via_function(self)
         except Exception as e:
             self.log_message(f"❌ Import via error: {str(e)}")
@@ -3171,7 +3171,7 @@ class IMGFactory(QMainWindow):
     def remove_via_entries(self):
         """Remove entries via IDE file"""
         try:
-            from core.remove import remove_via_entries_function
+            from application.core.remove import remove_via_entries_function
             remove_via_entries_function(self)
         except Exception as e:
             self.log_message(f"❌ Remove via error: {str(e)}")
@@ -3201,7 +3201,7 @@ class IMGFactory(QMainWindow):
             self.log_message("🔧 Applying search and performance fixes...")
 
             # 1. Setup our new consolidated search system
-            from core.guisearch import install_search_system
+            from application.core.guisearch import install_search_system
             if install_search_system(self):
                 self.log_message("✅ New search system installed")
             else:

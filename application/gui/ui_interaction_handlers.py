@@ -1,4 +1,4 @@
-#this belongs in application/Shared/ui_interaction_handlers.py - Version: 1
+#this belongs in application.shared/ui_interaction_handlers.py - Version: 1
 # X-Seti - September12 2025 - IMG Factory 1.5 - UI Interaction Handlers
 
 """

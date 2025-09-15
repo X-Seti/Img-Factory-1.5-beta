@@ -171,7 +171,7 @@ def perform_img_rebuild(main_window, img_file, file_path: str) -> bool: #vers 1
         
         # Import rebuild functionality
         try:
-            from Core.rebuild import rebuild_img_file_core
+            from application.core.rebuild import rebuild_img_file_core
             return rebuild_img_file_core(main_window, img_file)
         except ImportError:
             pass

@@ -10,9 +10,9 @@ import os
 from typing import Optional, List, Dict, Any
 
 # Import from new structure
-from Shared.populate_img_table import populate_img_table_enhanced, refresh_table
-from Shared.populate_col_table import populate_col_table_enhanced
-from Shared.progress_functions import show_progress, hide_progress
+from shared.populate_img_table import populate_img_table_enhanced, refresh_table
+from shared.populate_col_table import populate_col_table_enhanced
+from shared.progress_functions import show_progress, hide_progress
 
 ##Methods list -
 # refresh_current_table

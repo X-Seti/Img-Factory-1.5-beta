@@ -11,8 +11,8 @@ from typing import Optional, List, Dict, Any
 from PyQt6.QtWidgets import QMessageBox, QFileDialog, QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QComboBox, QCheckBox, QSpinBox
 
 # Import from new structure
-from Shared.progress_functions import show_progress, update_progress, hide_progress
-from Shared.populate_img_table import populate_img_table_enhanced
+from shared.progress_functions import show_progress, update_progress, hide_progress
+from shared.populate_img_table import populate_img_table_enhanced
 
 ##Methods list -
 # create_new_img

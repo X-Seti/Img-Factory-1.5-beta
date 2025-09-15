@@ -16,7 +16,7 @@ from .core import (
     IMGArchive,
     File_Operations, 
     IMG_Operations,
-    Import_Export
+    import_export
 )
 from .core.File_Operations import ArchiveManager
 from application.debug_system import get_debug_logger, LogCategory
@@ -204,7 +204,7 @@ class IMGWorkerThread(QThread):
             
             try:
                 entry_name = entry_names[i] if entry_names and i < len(entry_names) else None
-                entry = Import_Export.import_file(archive, file_path, entry_name)
+                entry = import_export.import_file(archive, file_path, entry_name)
                 
                 if entry:
                     imported_entries.append(entry)
@@ -246,7 +246,7 @@ class IMGWorkerThread(QThread):
         self.progress_updated.emit(10, f"Scanning folder: {Path(folder_path).name}")
         
         try:
-            imported_entries, failed_files = Import_Export.import_folder(
+            imported_entries, failed_files = import_export.import_folder(
                 archive, folder_path, recursive, filter_extensions
             )
             
@@ -284,7 +284,7 @@ class IMGWorkerThread(QThread):
         self.progress_updated.emit(10, "Parsing IDE file...")
         
         try:
-            imported_entries, failed_files, parsed_info = Import_Export.import_via_ide(
+            imported_entries, failed_files, parsed_info = import_export.import_via_ide(
                 archive, ide_file_path, models_directory
             )
             
@@ -345,7 +345,7 @@ class IMGWorkerThread(QThread):
             self.progress_updated.emit(progress, f"Extracting {i+1}/{total_entries}: {entry.name}")
             
             try:
-                output_path = Import_Export.export_entry(archive, entry, output_dir=output_dir)
+                output_path = import_export.export_entry(archive, entry, output_dir=output_dir)
                 extracted_files.append(output_path)
             except Exception as e:
                 # Continue with other files even if one fails
@@ -432,7 +432,7 @@ class IMGWorkerThread(QThread):
             self.progress_updated.emit(progress, f"Exporting {entry.name} ({i+1}/{total_entries})")
             
             try:
-                exported_path = Import_Export.export_entry(img_archive, entry, output_dir=output_dir)
+                exported_path = import_export.export_entry(img_archive, entry, output_dir=output_dir)
                 exported_files.append(exported_path)
             except Exception as e:
                 failed_entries.append(entry)
@@ -469,7 +469,7 @@ class IMGWorkerThread(QThread):
         self.progress_updated.emit(0, f"Starting export of all entries ({total_entries} total)")
         
         try:
-            exported_files, failed_entries = Import_Export.export_all(img_archive, output_dir, filter_type)
+            exported_files, failed_entries = import_export.export_all(img_archive, output_dir, filter_type)
             
             if self._check_cancelled():
                 return
@@ -505,7 +505,7 @@ class IMGWorkerThread(QThread):
         self.progress_updated.emit(0, f"Starting export by type: {', '.join(types)}")
         
         try:
-            results = Import_Export.export_by_type(img_archive, output_dir, types)
+            results = import_export.export_by_type(img_archive, output_dir, types)
             
             if self._check_cancelled():
                 return
@@ -1015,7 +1015,7 @@ class IMGController(QObject):
         if not models_directory or not os.path.isdir(models_directory):
             return False, "Invalid models directory"
         try:
-            from .core.Import_Export import Import_Export
+            from .core.import_export import import_export
             parsed_info = {
                 'objs_count': 0,
                 'tobj_count': 0,
@@ -1026,15 +1026,15 @@ class IMGController(QObject):
                 'missing_models': [],
                 'missing_textures': []
             }
-            models, textures = Import_Export._parse_ide_file(ide_file_path, parsed_info)
+            models, textures = import_export._parse_ide_file(ide_file_path, parsed_info)
             for model_name in models:
-                dff_path = Import_Export._find_file_in_directory(models_directory, f"{model_name}.dff")
+                dff_path = import_export._find_file_in_directory(models_directory, f"{model_name}.dff")
                 if dff_path:
                     parsed_info['found_models'].append(model_name)
                 else:
                     parsed_info['missing_models'].append(model_name)
             for texture_name in textures:
-                txd_path = Import_Export._find_file_in_directory(models_directory, f"{texture_name}.txd")
+                txd_path = import_export._find_file_in_directory(models_directory, f"{texture_name}.txd")
                 if txd_path:
                     parsed_info['found_textures'].append(texture_name)
                 else:
@@ -1124,7 +1124,7 @@ class IMGController(QObject):
             return False, "No IMG file is currently open"
         
         try:
-            preview = Import_Export.get_import_preview(active_archive, file_paths)
+            preview = import_export.get_import_preview(active_archive, file_paths)
             return True, preview
         except Exception as e:
             return False, f"Error generating import preview: {str(e)}"
@@ -1138,7 +1138,7 @@ class IMGController(QObject):
             return False, "No active archive"
         
         try:
-            exported_path = Import_Export.export_entry(active_archive, entry, output_path, output_dir)
+            exported_path = import_export.export_entry(active_archive, entry, output_path, output_dir)
             return True, f"Exported {entry.name} to {exported_path}"
         except Exception as e:
             return False, f"Failed to export {entry.name}: {str(e)}"

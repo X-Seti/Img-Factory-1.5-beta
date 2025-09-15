@@ -1,10 +1,10 @@
-#this belongs in application/Tools/IMG_Factory/core/Import_Export.py - Version: Bridge
+#this belongs in application.tools/IMG_Factory/core/import_export.py - Version: Bridge
 # X-Seti - September13 2025 - IMG Factory 1.5 - Import/Export Bridge File
 
 """
-Import/Export Bridge File - Redirects to application/Core functions
-This file maintains compatibility with IMG-Editor code while using application/Core functions
-All actual functionality is now in application/Core/ files for better organization
+Import/Export Bridge File - Redirects to application.core functions
+This file maintains compatibility with IMG-Editor code while using application.core functions
+All actual functionality is now in application.core/ files for better organization
 """
 
 import os
@@ -16,14 +16,14 @@ apps_path = Path(__file__).parent.parent.parent.parent
 if str(apps_path) not in sys.path:
     sys.path.insert(0, str(apps_path))
 
-# Import from application/Core structure
+# Import from application.core structure
 try:
-    from application.Core.impotr import import_file_to_img, import_multiple_files, import_folder_contents
-    from application.Core.export import export_selected_entries, export_all_entries, export_entries_by_type
-    from application.Core.import_via import import_via_function
-    from application.Core.dump import dump_selected_entries, dump_all_entries
+    from application.core.impotr import import_file_to_img, import_multiple_files, import_folder_contents
+    from application.core.export import export_selected_entries, export_all_entries, export_entries_by_type
+    from application.core.import_via import import_via_function
+    from application.core.dump import dump_selected_entries, dump_all_entries
 except ImportError as e:
-    print(f"Warning: Could not import from application/Core: {e}")
+    print(f"Warning: Could not import from application.core: {e}")
     # Fallback imports can go here if needed
 
 # Create simple debug logger fallback
@@ -50,21 +50,21 @@ debug_logger = SimpleLogger()
 def get_debug_logger():
     return debug_logger
 
-class Import_Export:
+class import_export:
     """
-    Bridge class that redirects IMG-Editor Import_Export calls to application/Core functions
+    Bridge class that redirects IMG-Editor import_export calls to application.core functions
     This maintains compatibility while using the new modular structure
     """
     
     @staticmethod
     def import_file(img_archive, file_path, entry_name=None):
         """
-        Bridge method: Redirects to application/Core/impotr.py
+        Bridge method: Redirects to application.core/impotr.py
         """
         try:
             # This needs to be adapted to work with your IMG archive structure
             # You may need to create a compatibility wrapper
-            print(f"[BRIDGE] Redirecting import_file to application/Core/impotr.py")
+            print(f"[BRIDGE] Redirecting import_file to application.core/impotr.py")
             
             # For now, return a basic success response
             # You'll need to adapt this based on how your current_img works
@@ -77,10 +77,10 @@ class Import_Export:
     @staticmethod
     def import_multiple_files(img_archive, file_paths, entry_names=None):
         """
-        Bridge method: Redirects to application/Core/impotr.py
+        Bridge method: Redirects to application.core/impotr.py
         """
         try:
-            print(f"[BRIDGE] Redirecting import_multiple_files to application/Core/impotr.py")
+            print(f"[BRIDGE] Redirecting import_multiple_files to application.core/impotr.py")
             
             # Bridge to your Core function
             # This will need adaptation based on your main_window structure
@@ -96,10 +96,10 @@ class Import_Export:
     @staticmethod
     def import_folder(img_archive, folder_path, recursive=False, filter_extensions=None):
         """
-        Bridge method: Redirects to application/Core/impotr.py
+        Bridge method: Redirects to application.core/impotr.py
         """
         try:
-            print(f"[BRIDGE] Redirecting import_folder to application/Core/impotr.py")
+            print(f"[BRIDGE] Redirecting import_folder to application.core/impotr.py")
             
             # Bridge to your Core function
             imported_entries = []
@@ -114,14 +114,14 @@ class Import_Export:
     @staticmethod
     def import_via_ide(img_archive, ide_file_path, models_directory=None):
         """
-        Bridge method: Redirects to application/Core/import_via.py
+        Bridge method: Redirects to application.core/import_via.py
         """
         try:
-            print(f"[BRIDGE] Redirecting import_via_ide to application/Core/import_via.py")
+            print(f"[BRIDGE] Redirecting import_via_ide to application.core/import_via.py")
             
             # Bridge to your Core function
             # This will need main_window context to work properly
-            return True, "IDE import bridged to application/Core"
+            return True, "IDE import bridged to application.core"
             
         except Exception as e:
             debug_logger.log_exception(LogCategory.FILE_IO, f"Bridge import_via_ide failed", e)
@@ -130,10 +130,10 @@ class Import_Export:
     @staticmethod
     def export_entry(img_archive, entry, output_path=None, output_dir=None):
         """
-        Bridge method: Redirects to application/Core/export.py
+        Bridge method: Redirects to application.core/export.py
         """
         try:
-            print(f"[BRIDGE] Redirecting export_entry to application/Core/export.py")
+            print(f"[BRIDGE] Redirecting export_entry to application.core/export.py")
             
             # Bridge to your Core function
             return True
@@ -145,10 +145,10 @@ class Import_Export:
     @staticmethod
     def export_all(img_archive, output_dir, filter_type=None):
         """
-        Bridge method: Redirects to application/Core/export.py
+        Bridge method: Redirects to application.core/export.py
         """
         try:
-            print(f"[BRIDGE] Redirecting export_all to application/Core/export.py")
+            print(f"[BRIDGE] Redirecting export_all to application.core/export.py")
             
             # Bridge to your Core function
             exported_entries = []
@@ -163,10 +163,10 @@ class Import_Export:
     @staticmethod
     def export_by_type(img_archive, output_dir, types):
         """
-        Bridge method: Redirects to application/Core/export.py
+        Bridge method: Redirects to application.core/export.py
         """
         try:
-            print(f"[BRIDGE] Redirecting export_by_type to application/Core/export.py")
+            print(f"[BRIDGE] Redirecting export_by_type to application.core/export.py")
             
             # Bridge to your Core function
             exported_entries = []
@@ -184,7 +184,7 @@ class Import_Export:
         Bridge method: IDE file parsing
         """
         try:
-            print(f"[BRIDGE] Redirecting IDE parsing to application/Core/import_via.py")
+            print(f"[BRIDGE] Redirecting IDE parsing to application.core/import_via.py")
             
             # Basic IDE parsing bridge - you may need to enhance this
             models = set()
@@ -227,7 +227,7 @@ class Import_Export:
 SECTOR_SIZE = 2048
 MAX_FILENAME_LENGTH = 24
 
-print("[BRIDGE] Import_Export bridge loaded - redirecting to application/Core functions")
+print("[BRIDGE] import_export bridge loaded - redirecting to application.core functions")
 
 # Export the class for compatibility
-__all__ = ['Import_Export', 'get_debug_logger', 'LogCategory', 'debug_logger']
+__all__ = ['import_export', 'get_debug_logger', 'LogCategory', 'debug_logger']

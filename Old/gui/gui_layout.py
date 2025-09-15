@@ -13,35 +13,35 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import Qt, QTimer, QSize, pyqtSignal, QPoint
 from PyQt6.QtGui import QFont, QAction, QIcon, QShortcut, QKeySequence, QPalette, QTextCursor
-from core.gui_search import ASearchDialog, SearchManager
+from application.core.gui_search import ASearchDialog, SearchManager
 from typing import Optional, Dict, Any, List, Callable
 from dataclasses import dataclass, field
 from components.Img_Creator.img_creator import NewIMGDialog, IMGCreationThread
 from components.Ide_Editor.ide_editor import open_ide_editor
 
 #core
-from core.impotr import import_files_function
-from core.import_via import import_via_function
-#from core.import_via import integrate_import_via_functions
-from core.remove import remove_selected_function
-from core.remove_via import integrate_remove_via_functions
-from core.remove_via import remove_via_function as remove_via_entries_function
-from core.export import export_selected_function
+from application.core.impotr import import_files_function
+from application.core.import_via import import_via_function
+#from application.core.import_via import integrate_import_via_functions
+from application.core.remove import remove_selected_function
+from application.core.remove_via import integrate_remove_via_functions
+from application.core.remove_via import remove_via_function as remove_via_entries_function
+from application.core.export import export_selected_function
 # export_all_function, integrate_export_functions
-from core.export_via import export_via_function
-from core.quick_export import quick_export_function
-from core.clean import integrate_clean_utilities
-from core.rebuild import rebuild_current_img_native
-from core.rebuild_all import rebuild_all_open_tabs
-#from core.rebuild import rebuild_current_img #old function.
-from core.dump import dump_all_function # dump_selected_function, integrate_dump_functions
-from core.img_split import split_img, integrate_split_functions
-from core.img_merger import merge_img_function
-from core.convert import convert_img, convert_img_format
-from core.rename import rename_entry
-from core.reload import reload_current_file
-from core.img_creator import create_new_img, detect_and_open_file, open_file_dialog, detect_file_type
-from core.close import close_img_file, close_all_img, install_close_functions, setup_close_manager
+from application.core.export_via import export_via_function
+from application.core.quick_export import quick_export_function
+from application.core.clean import integrate_clean_utilities
+from application.core.rebuild import rebuild_current_img_native
+from application.core.rebuild_all import rebuild_all_open_tabs
+#from application.core.rebuild import rebuild_current_img #old function.
+from application.core.dump import dump_all_function # dump_selected_function, integrate_dump_functions
+from application.core.img_split import split_img, integrate_split_functions
+from application.core.img_merger import merge_img_function
+from application.core.convert import convert_img, convert_img_format
+from application.core.rename import rename_entry
+from application.core.reload import reload_current_file
+from application.core.img_creator import create_new_img, detect_and_open_file, open_file_dialog, detect_file_type
+from application.core.close import close_img_file, close_all_img, install_close_functions, setup_close_manager
 from methods.colour_ui_for_loaded_img import integrate_color_ui_system
 from gui.gui_context import open_col_editor_dialog
 from methods.refresh_table_functions import refresh_table

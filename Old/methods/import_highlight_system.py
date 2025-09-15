@@ -429,7 +429,7 @@ def get_theme_highlight_colors(): #vers 1
         # Replace this with your actual theme system calls
 
         # Example integration:
-        # from core.theme_integration import get_current_theme_colors
+        # from application.core.theme_integration import get_current_theme_colors
         # theme_colors = get_current_theme_colors()
         # return theme_colors.get('accent_secondary', '#90EE90')
 

@@ -12,10 +12,10 @@ from PyQt6.QtWidgets import QMessageBox, QFileDialog
 from PyQt6.QtCore import QThread, pyqtSignal
 
 # Import from new structure
-from Core.rw_versions import detect_rw_file_format, get_rw_version_name, is_valid_rw_version
-from Shared.progress_functions import show_progress, update_progress, hide_progress, start_operation, complete_operation
-from Shared.populate_img_table import populate_img_table_enhanced
-from Shared.populate_col_table import populate_col_table_enhanced
+from application.core.rw_versions import detect_rw_file_format, get_rw_version_name, is_valid_rw_version
+from shared.progress_functions import show_progress, update_progress, hide_progress, start_operation, complete_operation
+from shared.populate_img_table import populate_img_table_enhanced
+from shared.populate_col_table import populate_col_table_enhanced
 
 ##Methods list -
 # open_img_file

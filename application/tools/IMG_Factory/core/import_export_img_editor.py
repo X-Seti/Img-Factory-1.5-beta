@@ -13,7 +13,7 @@ from application.debug_system import get_debug_logger, LogCategory
 # Module-level logger
 debug_logger = get_debug_logger()
 
-class Import_Export:
+class import_export:
     """Class containing methods for importing and exporting files to/from IMG archives."""
     
     
@@ -109,7 +109,7 @@ class Import_Export:
         debug_logger.info(LogCategory.TOOL, "Starting IDE import", {"ide_file_path": ide_file_path})
         
         # Parse IDE file
-        models, textures = Import_Export._parse_ide_file(ide_file_path, parsed_info)
+        models, textures = import_export._parse_ide_file(ide_file_path, parsed_info)
         
         if not models and not textures:
             debug_logger.warning(LogCategory.TOOL, "No models or textures found in IDE file", {"ide_file_path": ide_file_path})
@@ -123,11 +123,11 @@ class Import_Export:
         
         # Find and import DFF files
         for model_name in models:
-            dff_path = Import_Export._find_file_in_directory(models_directory, f"{model_name}.dff")
+            dff_path = import_export._find_file_in_directory(models_directory, f"{model_name}.dff")
             if dff_path:
                 parsed_info['found_models'].append(model_name)
                 try:
-                    entry = Import_Export.import_file(img_archive, dff_path)
+                    entry = import_export.import_file(img_archive, dff_path)
                     if entry:
                         imported_entries.append(entry)
                         debug_logger.info(LogCategory.TOOL, "Imported model", {"model": f"{model_name}.dff"})
@@ -143,11 +143,11 @@ class Import_Export:
         
         # Find and import TXD files
         for texture_name in textures:
-            txd_path = Import_Export._find_file_in_directory(models_directory, f"{texture_name}.txd")
+            txd_path = import_export._find_file_in_directory(models_directory, f"{texture_name}.txd")
             if txd_path:
                 parsed_info['found_textures'].append(texture_name)
                 try:
-                    entry = Import_Export.import_file(img_archive, txd_path)
+                    entry = import_export.import_file(img_archive, txd_path)
                     if entry:
                         imported_entries.append(entry)
                         debug_logger.info(LogCategory.TOOL, "Imported texture", {"texture": f"{texture_name}.txd"})
@@ -324,7 +324,7 @@ class Import_Export:
                 
                 try:
                     debug_logger.debug(LogCategory.FILE_IO, "Attempting to import file", {"file_path": file_path, "entry_name": entry_name})
-                    entry = Import_Export.import_file(img_archive, file_path, entry_name)
+                    entry = import_export.import_file(img_archive, file_path, entry_name)
                     if entry:
                         imported_entries.append(entry)
                         debug_logger.info(LogCategory.TOOL, "Successfully imported file", {"entry_name": entry_name})
@@ -380,7 +380,7 @@ class Import_Export:
                 
                 debug_logger.debug(LogCategory.FILE_IO, "Importing file in batch", {"index": i+1, "total": len(file_paths), "file_path": file_path, "entry_name": entry_name})
                 
-                entry = Import_Export.import_file(img_archive, file_path, entry_name)
+                entry = import_export.import_file(img_archive, file_path, entry_name)
                 if entry:
                     imported_entries.append(entry)
                     debug_logger.info(LogCategory.TOOL, "Successfully imported in batch", {"index": i+1, "total": len(file_paths), "entry_name": entry_name})
@@ -466,7 +466,7 @@ class Import_Export:
                 continue
             
             try:
-                output_path = Import_Export.export_entry(img_archive, entry, output_dir=output_dir)
+                output_path = import_export.export_entry(img_archive, entry, output_dir=output_dir)
                 exported_files.append(output_path)
             except Exception as e:
                 failed_entries.append(entry)
@@ -504,7 +504,7 @@ class Import_Export:
                     type_dir = os.path.join(output_dir, entry.type)
                     os.makedirs(type_dir, exist_ok=True)
                     
-                    output_path = Import_Export.export_entry(img_archive, entry, output_dir=type_dir)
+                    output_path = import_export.export_entry(img_archive, entry, output_dir=type_dir)
                     results[entry.type][0].append(output_path)  # Add to exported_files
                 except Exception as e:
                     results[entry.type][1].append(entry)  # Add to failed_entries
@@ -587,7 +587,7 @@ class Import_Export:
         
         for file_path in file_paths:
             # Validate file
-            is_valid, error_msg = Import_Export.validate_import_file(file_path)
+            is_valid, error_msg = import_export.validate_import_file(file_path)
             
             if not is_valid:
                 preview['invalid_files'].append({

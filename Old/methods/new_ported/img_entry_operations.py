@@ -321,7 +321,7 @@ def create_img_entry(filename: str, data: bytes, img_file) -> Optional[Any]: #ve
         # Try Core.py (IMG_Editor reference)
         if not entry:
             try:
-                from Core import IMGEntry
+                from application.core.import IMGEntry
                 entry = IMGEntry()
             except ImportError:
                 pass

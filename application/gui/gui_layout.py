@@ -17,7 +17,7 @@ from typing import Optional, Dict, Any, List, Callable
 from dataclasses import dataclass, field
 
 # Import button layout module
-from application.Gui.gui_button_layout import (
+from application.gui.gui_button_layout import (
     get_button_theme_template, get_img_buttons_data, get_entry_buttons_data,
     get_options_buttons_data, apply_button_theme_styling, get_short_text_mappings,
     get_button_tooltips, is_dark_theme_check
@@ -83,24 +83,24 @@ class IMGFactoryGUILayout:
         """Create comprehensive method mappings with priority system"""
         method_mappings = {}
         
-        # === PRIORITY 1: application/Core/ Functions (Button-Ready with Dialogs) ===
+        # === PRIORITY 1: application.core/ Functions (Button-Ready with Dialogs) ===
         try:
             # Import all available Core functions
-            from application.Core.img_creator import create_new_img, open_file_dialog
-            from application.Core.close import close_img_file, close_all_img
-            from application.Core.rebuild import rebuild_current_img_native
-            from application.Core.rebuild_all import show_batch_rebuild_dialog
-            from application.Core.export import export_entries_function
-            from application.Core.dump import dump_entries_function
-            from application.Core.remove import remove_entries_function
-            from application.Core.impotr import import_files_function
-            from application.Core.export_via import export_via_function
-            from application.Core.rename import rename_entry
-            from application.Core.reload import reload_current_file
-            from application.Core.convert import convert_img_format
-            from application.Core.img_split import split_img
-            from application.Core.img_merger import merge_img_function
-            from application.Core.quick_export import quick_export_function
+            from application.core.img_creator import create_new_img, open_file_dialog
+            from application.core.close import close_img_file, close_all_img
+            from application.core.rebuild import rebuild_current_img_native
+            from application.core.rebuild_all import show_batch_rebuild_dialog
+            from application.core.export import export_entries_function
+            from application.core.dump import dump_entries_function
+            from application.core.remove import remove_entries_function
+            from application.core.impotr import import_files_function
+            from application.core.export_via import export_via_function
+            from application.core.rename import rename_entry
+            from application.core.reload import reload_current_file
+            from application.core.convert import convert_img_format
+            from application.core.img_split import split_img
+            from application.core.img_merger import merge_img_function
+            from application.core.quick_export import quick_export_function
             
             # Map Core functions (PRIMARY)
             core_mappings = {
@@ -127,26 +127,26 @@ class IMGFactoryGUILayout:
             }
             
             method_mappings.update(core_mappings)
-            self._safe_log(f"✅ Loaded {len(core_mappings)} application/Core functions")
+            self._safe_log(f"✅ Loaded {len(core_mappings)} application.core functions")
             
         except ImportError as e:
-            self._safe_log(f"⚠️ application/Core functions not available: {str(e)}")
+            self._safe_log(f"⚠️ application.core functions not available: {str(e)}")
             
             # Fallback to original imports
             try:
-                from core.impotr import import_files_function as fallback_import
-                from core.export import export_selected_function as fallback_export
-                from core.remove import remove_selected_function as fallback_remove
-                from core.rebuild import rebuild_current_img_native as fallback_rebuild
-                from core.img_creator import create_new_img as fallback_create, open_file_dialog as fallback_open
-                from core.close import close_img_file as fallback_close, close_all_img as fallback_close_all
-                from core.reload import reload_current_file as fallback_reload
-                from core.convert import convert_img_format as fallback_convert
-                from core.img_split import split_img as fallback_split
-                from core.img_merger import merge_img_function as fallback_merge
-                from core.quick_export import quick_export_function as fallback_quick_export
-                from core.dump import dump_all_function as fallback_dump
-                from core.rename import rename_entry as fallback_rename
+                from application.core.impotr import import_files_function as fallback_import
+                from application.core.export import export_selected_function as fallback_export
+                from application.core.remove import remove_selected_function as fallback_remove
+                from application.core.rebuild import rebuild_current_img_native as fallback_rebuild
+                from application.core.img_creator import create_new_img as fallback_create, open_file_dialog as fallback_open
+                from application.core.close import close_img_file as fallback_close, close_all_img as fallback_close_all
+                from application.core.reload import reload_current_file as fallback_reload
+                from application.core.convert import convert_img_format as fallback_convert
+                from application.core.img_split import split_img as fallback_split
+                from application.core.img_merger import merge_img_function as fallback_merge
+                from application.core.quick_export import quick_export_function as fallback_quick_export
+                from application.core.dump import dump_all_function as fallback_dump
+                from application.core.rename import rename_entry as fallback_rename
                 
                 fallback_mappings = {
                     'create_new_img': lambda: fallback_create(self.main_window),
@@ -170,7 +170,7 @@ class IMGFactoryGUILayout:
                 self._safe_log(f"✅ Loaded {len(fallback_mappings)} fallback core functions")
                 
             except ImportError:
-                self._safe_log("❌ Both application/Core and core fallback imports failed")
+                self._safe_log("❌ Both application.core and core fallback imports failed")
         
         # === PRIORITY 2: Shared/ Legacy Functions ===
         try:
@@ -182,21 +182,21 @@ class IMGFactoryGUILayout:
             
             # Try additional imports
             try:
-                from core.import_via import import_via_function
+                from application.core.import_via import import_via_function
                 legacy_mappings['import_files_via'] = lambda: import_via_function(self.main_window)
             except ImportError:
                 try:
-                    from Shared.import_functions import import_files_via_function
+                    from shared.import_functions import import_files_via_function
                     legacy_mappings['import_files_via'] = lambda: import_files_via_function(self.main_window)
                 except ImportError:
                     legacy_mappings['import_files_via'] = lambda: self._log_missing_method('import_files_via')
             
             try:
-                from core.remove_via import remove_via_function as remove_via_entries_function
+                from application.core.remove_via import remove_via_function as remove_via_entries_function
                 legacy_mappings['remove_via_entries'] = lambda: remove_via_entries_function(self.main_window)
             except ImportError:
                 try:
-                    from Shared.remove_functions import remove_via_entries_function
+                    from shared.remove_functions import remove_via_entries_function
                     legacy_mappings['remove_via_entries'] = lambda: remove_via_entries_function(self.main_window)
                 except ImportError:
                     legacy_mappings['remove_via_entries'] = lambda: self._log_missing_method('remove_via_entries')
@@ -572,6 +572,7 @@ class IMGFactoryGUILayout:
             import traceback
             traceback.print_exc()
 
+
     def _dock_tab_widget_back(self): #vers 2
         """Dock torn off tab widget back to main window - FIXED"""
         try:
@@ -600,4 +601,995 @@ class IMGFactoryGUILayout:
                     self.main_window.log_message("⚠️ Original layout changed, using current layout")
                     original_layout = original_parent.layout()
                     if not original_layout:
-                        self.main_window.log_message("❌ Original parent no longer has a layout
+                        self.main_window.log_message("❌ Original parent no longer has a layout")
+                        return
+            except:
+                self.main_window.log_message("❌ Original parent is no longer valid")
+                return
+
+            # Remove from tearoff panel first
+            if tearoff_panel:
+                try:
+                    tearoff_panel_layout = tearoff_panel.layout()
+                    if tearoff_panel_layout:
+                        tearoff_panel_layout.removeWidget(self.tab_widget)
+                    tearoff_panel.hide()
+                    tearoff_panel.deleteLater()
+                except Exception as e:
+                    self.main_window.log_message(f"⚠️ Error cleaning up tearoff panel: {str(e)}")
+
+            # Add back to original parent layout
+            try:
+                original_layout.addWidget(self.tab_widget)
+            except Exception as e:
+                self.main_window.log_message(f"❌ Error adding back to original layout: {str(e)}")
+                return
+
+            # Clean up references
+            try:
+                delattr(self.tab_widget, 'original_parent')
+                delattr(self.tab_widget, 'original_layout')
+                delattr(self.tab_widget, 'tearoff_panel')
+                delattr(self.tab_widget, 'is_torn_off')
+            except:
+                pass  # Attributes might not exist
+
+            # Update button appearance
+            self._update_tearoff_button_state(False)
+
+            # Force widget to show and update
+            self.tab_widget.show()
+            self.tab_widget.update()
+
+            self.main_window.log_message("🔗 Tab widget docked back to main window")
+
+        except Exception as e:
+            self.main_window.log_message(f"❌ Error docking tab widget back: {str(e)}")
+            import traceback
+            traceback.print_exc()
+
+    def _update_tearoff_button_state(self, is_torn_off): #vers 2
+        """Update tearoff button appearance based on state - SAFER VERSION"""
+        try:
+            if not hasattr(self, 'tearoff_button') or not self.tearoff_button:
+                return
+
+            if is_torn_off:
+                self.tearoff_button.setText("⧈")  # Different icon when torn off
+                self.tearoff_button.setToolTip("Dock tab widget back to main window")
+            else:
+                self.tearoff_button.setText("⧉")  # Original icon when docked
+                self.tearoff_button.setToolTip("Tear off tab widget to separate window")
+
+            # Reapply theme styling to ensure consistency
+            if hasattr(self, '_apply_tearoff_button_theme'):
+                self._apply_tearoff_button_theme()
+
+        except Exception as e:
+            if hasattr(self.main_window, 'log_message'):
+                self.main_window.log_message(f"⚠️ Error updating tearoff button state: {str(e)}")
+            else:
+                print(f"⚠️ Error updating tearoff button state: {str(e)}")
+
+
+    def _refresh_all_buttons(self): #vers 4
+        """Refresh all buttons with current theme colors"""
+        try:
+            # Get new theme colors
+            img_colors = self._get_img_buttons_data()
+            entry_colors = self._get_entry_buttons_data()
+            options_colors = self._get_options_buttons_data()
+
+            # Update IMG buttons
+            if hasattr(self, 'img_buttons'):
+                for i, btn in enumerate(self.img_buttons):
+                    if i < len(img_colors):
+                        label, action_type, icon, color, method_name = img_colors[i]
+                        self._update_button_theme(btn, color)
+
+            # Update Entry buttons
+            if hasattr(self, 'entry_buttons'):
+                for i, btn in enumerate(self.entry_buttons):
+                    if i < len(entry_colors):
+                        label, action_type, icon, color, method_name = entry_colors[i]
+                        self._update_button_theme(btn, color)
+
+            # Update Options buttons
+            if hasattr(self, 'options_buttons'):
+                for i, btn in enumerate(self.options_buttons):
+                    if i < len(options_colors):
+                        label, action_type, icon, color, method_name = options_colors[i]
+                        self._update_button_theme(btn, color)
+
+            print(f"✅ Refreshed {len(self.img_buttons + self.entry_buttons + self.options_buttons)} buttons for theme")
+
+        except Exception as e:
+            print(f"❌ Error refreshing buttons: {e}")
+
+    def add_txd_editor_button(self): #vers 3
+        """Add TXD Editor button to toolbar"""
+        if hasattr(self.main_window, 'button_panel'):
+            txd_button = QPushButton("TXD Editor")
+            txd_button.clicked.connect(self.launch_txd_editor)
+            txd_button.setToolTip("Open TXD Texture Editor")
+            self.main_window.button_panel.addWidget(txd_button)
+
+    def launch_txd_editor(self): #vers 1
+        """Launch TXD Editor"""
+        try:
+            if not self.main_window.txd_editor:
+                from components.Txd_Editor.txd_editor import TXDEditor
+                self.main_window.txd_editor = TXDEditor()
+            self.main_window.txd_editor.show()
+            self.main_window.txd_editor.raise_()
+        except Exception as e:
+            self.main_window.log_message(f"Failed to launch TXD Editor: {e}")
+
+    def _update_button_theme(self, btn, bg_color): #vers 2
+        """Update a single button's theme styling"""
+        try:
+            is_dark_theme = self._is_dark_theme()
+
+            if is_dark_theme:
+                # Dark theme styling
+                button_bg = self._darken_color(bg_color, 0.4)
+                border_color = self._lighten_color(bg_color, 1.3)
+                text_color = self._lighten_color(bg_color, 1.5)
+                hover_bg = self._darken_color(bg_color, 0.3)
+                hover_border = self._lighten_color(bg_color, 1.4)
+                pressed_bg = self._darken_color(bg_color, 0.5)
+            else:
+                # Light theme styling
+                button_bg = bg_color
+                border_color = self._darken_color(bg_color, 0.6)
+                text_color = self._darken_color(bg_color, 1.8)
+                hover_bg = self._darken_color(bg_color, 0.9)
+                hover_border = self._darken_color(bg_color, 0.5)
+                pressed_bg = self._darken_color(bg_color, 0.8)
+
+
+            # Apply updated styling
+            btn.setStyleSheet(f"""
+                QPushButton {{
+                    background-color: {button_bg};
+                    border: 1px solid {border_color};
+                    border-radius: 3px;
+                    padding: 2px 6px;
+                    font-size: 8pt;
+                    font-weight: bold;
+                    color: {text_color};
+                }}
+                QPushButton:hover {{
+                    background-color: {hover_bg};
+                    border: 1px solid {hover_border};
+                }}
+                QPushButton:pressed {{
+                    background-color: {pressed_bg};
+                }}
+            """)
+        except Exception as e:
+            print(f"❌ Error updating button theme: {e}")
+
+
+    def create_pastel_button(self, label, action_type, icon, bg_color, method_name): #vers 3
+        """Create a button with pastel coloring that adapts to light/dark themes"""
+        btn = QPushButton(label)
+        btn.setMaximumHeight(22)
+        btn.setMinimumHeight(20)
+
+        # Detect if we're using a dark theme
+        is_dark_theme = self._is_dark_theme()
+
+        if is_dark_theme:
+            # Dark theme: darker pastel background, lighter edges, light text
+            button_bg = self._darken_color(bg_color, 0.4)  # Much darker pastel
+            border_color = self._lighten_color(bg_color, 1.3)  # Light border
+            text_color = self._lighten_color(bg_color, 1.5)   # Light text
+            hover_bg = self._darken_color(bg_color, 0.3)      # Slightly lighter on hover
+            hover_border = self._lighten_color(bg_color, 1.4)  # Even lighter border on hover
+            pressed_bg = self._darken_color(bg_color, 0.5)    # Darker when pressed
+        else:
+            # Light theme: light pastel background, dark edges, dark text
+            button_bg = bg_color  # Original pastel color
+            border_color = self._darken_color(bg_color, 0.6)  # Dark border
+            text_color = self._darken_color(bg_color, 1.8)    # Dark text
+            hover_bg = self._darken_color(bg_color, 0.9)      # Slightly darker on hover
+            hover_border = self._darken_color(bg_color, 0.5)  # Darker border on hover
+            pressed_bg = self._darken_color(bg_color, 0.8)    # Darker when pressed
+
+        # Apply theme-aware styling
+        btn.setStyleSheet(f"""
+            QPushButton {{
+                background-color: {button_bg};
+                border: 1px solid {border_color};
+                border-radius: 3px;
+                padding: 2px 6px;
+                font-size: 8pt;
+                font-weight: bold;
+                color: {text_color};
+            }}
+            QPushButton:hover {{
+                background-color: {hover_bg};
+                border: 1px solid {hover_border};
+            }}
+            QPushButton:pressed {{
+                background-color: {pressed_bg};
+            }}
+        """)
+
+        # Set action type property
+        btn.setProperty("action-type", action_type)
+
+        # Connect to method_mappings
+        try:
+            if method_name in self.method_mappings:
+                btn.clicked.connect(self.method_mappings[method_name])
+                if hasattr(self.main_window, 'gui_layout'):
+                    print(f"✅ Connected '{label}' to method_mappings[{method_name}]")
+            else:
+                btn.clicked.connect(lambda: self._safe_log(f"⚠️ Method '{method_name}' not in method_mappings"))
+                if hasattr(self.main_window, 'gui_layout'):
+                    print(f"⚠️ Method '{method_name}' not found in method_mappings for '{label}'")
+        except Exception as e:
+            if hasattr(self.main_window, 'gui_layout'):
+                print(f"❌ Error connecting button '{label}': {e}")
+            btn.clicked.connect(lambda: self._safe_log(f"Button '{label}' connection error"))
+
+        return btn
+
+
+    def _lighten_color(self, color, factor): #vers 2
+        """Lighten a hex color by factor (>1.0 lightens, <1.0 darkens)"""
+        try:
+            if not color.startswith('#'):
+                return color
+
+            color = color.lstrip('#')
+            r, g, b = tuple(int(color[i:i+2], 16) for i in (0, 2, 4))
+
+            # Lighten by moving towards white
+            r = min(255, int(r + (255 - r) * (factor - 1.0)))
+            g = min(255, int(g + (255 - g) * (factor - 1.0)))
+            b = min(255, int(b + (255 - b) * (factor - 1.0)))
+
+            return f"#{r:02x}{g:02x}{b:02x}"
+        except:
+            return color
+
+
+    def _darken_color(self, color, factor): #vers 2
+        """Darken a hex color by factor (0.0-1.0, where 0.8 = 20% darker)"""
+        try:
+            if not color.startswith('#'):
+                return color
+
+            color = color.lstrip('#')
+            r, g, b = tuple(int(color[i:i+2], 16) for i in (0, 2, 4))
+
+            # Darken by multiplying by factor
+            r = max(0, int(r * factor))
+            g = max(0, int(g * factor))
+            b = max(0, int(b * factor))
+
+            return f"#{r:02x}{g:02x}{b:02x}"
+        except:
+            return color
+
+
+    def _get_short_text(self, label): #vers 1
+        """Get short text for button"""
+        short_map = {
+            "Create": "New", "Open": "Open", "Reload": "Reload", "     ": " ",
+            "Close": "Close", "Close All": "Close A", "Rebuild": "Rebld",
+            "Rebuild All": "Rebld Al", "Save Entry": "Save", "Merge": "Merge",
+            "Split via": "Split", "Convert": "Conv", "Import": "Imp",
+            "Import via": "Imp via", "Refresh": "Refresh", "Export": "Exp",
+            "Export via": "Exp via", "Quick Exp": "Q Exp", "Remove": "Rem",
+            "Remove via": "Rem via", "Dump": "Dump", "Pin selected": "Pin",
+            "Rename": "Rename", "Replace": "Replace", "Select All": "Select",
+            "Inverse": "Inverse", "Sort via": "Sort", "Col Edit": "Col Edit",
+            "Txd Edit": "Txd Edit", "Dff Edit": "Dff Edit", "Ipf Edit": "Ipf Edit",
+            "IDE Edit": "IDE Edit", "IPL Edit": "IPL Edit", "Dat Edit": "Dat Edit",
+            "Zons Cull Ed": "Zons Cull", "Weap Edit": "Weap Edit", "Vehi Edit": "Vehi Edit",
+            "Peds Edit": "Peds Edit", "Radar Map": "Radar Map", "Paths Map": "Paths Map",
+            "Waterpro": "Waterpro", "Weather": "Weather", "Handling": "Handling",
+            "Objects": "Objects", "SCM code": "SCM Code", "GXT font": "GXT Edit",
+            "Menu Edit": "Menu Ed",
+        }
+        return short_map.get(label, label)
+
+
+    def create_main_ui_with_splitters(self, main_layout): #vers 3
+        """Create the main UI with correct 3-section layout"""
+        # Create main horizontal splitter
+        self.main_splitter = QSplitter(Qt.Orientation.Horizontal)
+
+        # Left side - vertical layout with 3 sections
+        left_panel = self._create_left_three_section_panel()
+
+        # Right side - control buttons with pastel colors
+        right_panel = self.create_right_panel_with_pastel_buttons()
+
+        # Add panels to splitter
+        self.main_splitter.addWidget(left_panel)
+        self.main_splitter.addWidget(right_panel)
+
+        # Set splitter proportions and force constraints
+        self.main_splitter.setSizes([1000, 280])  # Fixed right panel to 280px
+
+        # Add size constraints to force the right panel width
+        right_panel.setMaximumWidth(280)  # Fixed at 280px
+        right_panel.setMinimumWidth(280)  # Fixed at 280px
+
+        # Style the main horizontal splitter handle with theme colors
+        self._apply_main_splitter_theme()
+
+        # Prevent panels from collapsing completely
+        self.main_splitter.setCollapsible(0, False)  # Left panel
+        self.main_splitter.setCollapsible(1, False)  # Right panel
+
+        # Add splitter to main layout
+        main_layout.addWidget(self.main_splitter)
+
+
+    def _create_left_three_section_panel(self): #vers 3
+        """Create left panel with 3 sections: File Window, Status Window"""
+        left_container = QWidget()
+        left_layout = QVBoxLayout(left_container)
+        left_layout.setContentsMargins(3, 3, 3, 3)
+        left_layout.setSpacing(0)  # No spacing - splitter handles this
+
+        # Create vertical splitter for the sections
+        self.left_vertical_splitter = QSplitter(Qt.Orientation.Vertical)
+
+        # 1. MIDDLE: File Window (table with sub-tabs)
+        file_window = self._create_file_window()
+        self.left_vertical_splitter.addWidget(file_window)
+
+        # 2. BOTTOM: Status Window (log and status)
+        status_window = self.create_status_window()
+        self.left_vertical_splitter.addWidget(status_window)
+
+        # Set section proportions: File(760px), Status(200px)
+        self.left_vertical_splitter.setSizes([760, 200])
+
+        # Prevent sections from collapsing completely
+        self.left_vertical_splitter.setCollapsible(0, True)  # File window
+        self.left_vertical_splitter.setCollapsible(1, True)  # Status window
+
+        # Apply theme styling to vertical splitter
+        self._apply_vertical_splitter_theme()
+
+        left_layout.addWidget(self.left_vertical_splitter)
+        return left_container
+
+
+    def _create_file_window(self): #vers 3
+        """Create file window with tabs for different views"""
+        file_window = QWidget()
+        file_layout = QVBoxLayout(file_window)
+        file_layout.setContentsMargins(5, 5, 5, 5)
+        file_layout.setSpacing(3)
+
+        # Create tab widget
+        self.tab_widget = QTabWidget()
+
+        # Tab 1: File Entries (main table)
+        entries_tab = QWidget()
+        entries_layout = QVBoxLayout(entries_tab)
+        entries_layout.setContentsMargins(0, 0, 0, 0)
+
+        # Create main table
+        self.table = QTableWidget()
+        self.table.setColumnCount(9)
+        self.table.setHorizontalHeaderLabels([
+            "Num", "Name", "Extension", "Size", "Hash", "Hex", "Version", "Compression", "Status"
+        ])
+
+        # Table configuration
+        self.table.setAlternatingRowColors(True)
+        self.table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.table.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
+        self.table.setSortingEnabled(True)
+
+        # Column sizing
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)  # Num
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)  # Name
+        header.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)  # Extension
+        header.setSectionResizeMode(3, QHeaderView.ResizeMode.ResizeToContents)  # Size
+        header.setSectionResizeMode(4, QHeaderView.ResizeMode.Stretch)  # Hash
+        header.setSectionResizeMode(5, QHeaderView.ResizeMode.Stretch)  # Hex Value
+        header.setSectionResizeMode(6, QHeaderView.ResizeMode.Stretch)  # Version
+        header.setSectionResizeMode(7, QHeaderView.ResizeMode.Stretch)  # Compression
+        header.setSectionResizeMode(8, QHeaderView.ResizeMode.Stretch)  # Status
+
+        # Apply theme styling to table
+        self._apply_table_theme_styling()
+
+        entries_layout.addWidget(self.table)
+        self.tab_widget.addTab(entries_tab, "File Entries")
+
+
+        # Tab 2: Directory Tree (placeholder for integration)
+        tree_tab = QWidget()
+        tree_layout = QVBoxLayout(tree_tab)
+        tree_layout.setContentsMargins(0, 0, 0, 0)
+
+        # Placeholder content - will be replaced by integration
+        placeholder_label = QLabel("🌳 Directory Tree")
+        placeholder_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        placeholder_label.setStyleSheet("font-size: 14px; color: #888; font-style: italic;")
+        tree_layout.addWidget(placeholder_label)
+
+        info_label = QLabel("Directory tree will appear here after integration.")
+        info_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        info_label.setStyleSheet("color: #666; font-size: 12px;")
+        tree_layout.addWidget(info_label)
+
+        tree_layout.addStretch()
+
+        # Add the tab to the widget
+        self.tab_widget.addTab(tree_tab, "Directory Tree")
+
+        # Tab 3: Search Results (future enhancement)
+        search_tab = QWidget()
+        search_layout = QVBoxLayout(search_tab)
+        search_layout.setContentsMargins(0, 0, 0, 0)
+
+        search_placeholder = QLabel("Search results will be displayed here")
+        search_placeholder.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        search_placeholder.setStyleSheet("font-style: italic;")
+        search_layout.addWidget(search_placeholder)
+
+        self.tab_widget.addTab(search_tab, "Search Results")
+
+        # Apply theme styling to file window tabs
+        self._apply_file_list_window_theme_styling()
+
+        self._setup_tearoff_button_for_tabs()
+
+        file_layout.addWidget(self.tab_widget)
+        return file_window
+
+
+    def create_right_panel_with_pastel_buttons(self): #vers 2
+        """Create right panel with theme-controlled pastel buttons"""
+        right_panel = QWidget()
+        right_layout = QVBoxLayout(right_panel)
+        right_layout.setContentsMargins(4, 4, 4, 4)
+        right_layout.setSpacing(6)
+
+        # IMG Section with theme colors
+        img_box = QGroupBox("IMG, COL, TXD Files")
+        img_layout = QGridLayout()
+        img_layout.setSpacing(2)
+
+        # Use theme-controlled button data
+        img_buttons_data = self._get_img_buttons_data()
+
+        for i, (label, action_type, icon, color, method_name) in enumerate(img_buttons_data):
+            btn = self.create_pastel_button(label, action_type, icon, color, method_name)
+            btn.full_text = label
+            btn.short_text = self._get_short_text(label)
+            self.img_buttons.append(btn)
+            img_layout.addWidget(btn, i // 3, i % 3)
+
+        img_box.setLayout(img_layout)
+        right_layout.addWidget(img_box)
+
+        # Entries Section with theme colors
+        entries_box = QGroupBox("File Entries")
+        entries_layout = QGridLayout()
+        entries_layout.setSpacing(2)
+
+        # Use theme-controlled button data
+        entry_buttons_data = self._get_entry_buttons_data()
+
+        for i, (label, action_type, icon, color, method_name) in enumerate(entry_buttons_data):
+            btn = self.create_pastel_button(label, action_type, icon, color, method_name)
+            btn.full_text = label
+            btn.short_text = self._get_short_text(label)
+            self.entry_buttons.append(btn)
+            entries_layout.addWidget(btn, i // 3, i % 3)
+
+        entries_box.setLayout(entries_layout)
+        right_layout.addWidget(entries_box)
+
+        # Options Section with theme colors
+        options_box = QGroupBox("Editing Options")
+        options_layout = QGridLayout()
+        options_layout.setSpacing(2)
+
+        # Use theme-controlled button data
+        options_buttons_data = self._get_options_buttons_data()
+
+        for i, (label, action_type, icon, color, method_name) in enumerate(options_buttons_data):
+            btn = self.create_pastel_button(label, action_type, icon, color, method_name)
+            btn.full_text = label
+            btn.short_text = self._get_short_text(label)
+            self.options_buttons.append(btn)
+            options_layout.addWidget(btn, i // 3, i % 3)
+
+        options_box.setLayout(options_layout)
+        right_layout.addWidget(options_box)
+
+        # Filter Section
+        filter_box = QGroupBox("Filter & Search")
+        filter_layout = QVBoxLayout()
+        filter_layout.setSpacing(4)
+
+        # Filter controls
+        filter_controls = QHBoxLayout()
+        filter_combo = QComboBox()
+        filter_combo.addItems(["All Files", "DFF Models", "TXD Textures", "COL Collision", "IFP Animations"])
+        filter_controls.addWidget(QLabel("Type:"))
+        filter_controls.addWidget(filter_combo)
+        filter_layout.addLayout(filter_controls)
+
+        search_controls = QHBoxLayout()
+        search_input = QLineEdit()
+        search_input.setPlaceholderText("Search filename...")
+        search_controls.addWidget(QLabel("Search:"))
+        search_controls.addWidget(search_input)
+        filter_layout.addLayout(search_controls)
+
+        filter_box.setLayout(filter_layout)
+        right_layout.addWidget(filter_box)
+
+        # Add stretch to push everything up
+        right_layout.addStretch()
+        return right_panel
+
+
+    def create_status_window(self): #vers 4
+        """Create status window with log"""
+        self.status_window = QWidget()
+        status_layout = QVBoxLayout(self.status_window)
+        status_layout.setContentsMargins(5, 5, 5, 5)
+        status_layout.setSpacing(3)
+
+        # Title
+        title_layout = QHBoxLayout()
+        title_label = QLabel("Activity Log")
+        title_label.setStyleSheet("font-weight: bold; font-size: 10pt;")
+        title_layout.addWidget(title_label)
+
+        # Status indicators
+        title_layout.addStretch()
+
+        # Status label
+        self.status_label = QLabel("Ready")
+        title_layout.addWidget(self.status_label)
+        status_layout.addLayout(title_layout)
+
+        # Log with scrollbars
+        self.log = QTextEdit()
+        self.log.setReadOnly(True)
+        self.log.setPlaceholderText("Activity log will appear here...")
+
+        # Enable scrollbars for log
+        self.log.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.log.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+
+        # Apply theme styling to log
+        self._apply_log_theme_styling()
+        status_layout.addWidget(self.log)
+
+        # Apply theme styling to status window
+        self._apply_status_window_theme_styling()
+
+        return self.status_window
+
+
+    def _apply_table_theme_styling(self): #vers 5
+        """Apply theme styling to the table widget"""
+        theme_colors = self._get_theme_colors("default")
+
+        # Use standard theme variables from app_settings_system.py
+        panel_bg = theme_colors.get('panel_bg', '#ffffff')
+        bg_secondary = theme_colors.get('bg_secondary', '#f8f9fa')
+        bg_tertiary = theme_colors.get('bg_tertiary', '#e9ecef')
+        border = theme_colors.get('border', '#dee2e6')
+        text_primary = theme_colors.get('text_primary', '#000000')
+        text_secondary = theme_colors.get('text_secondary', '#495057')
+        accent_primary = theme_colors.get('accent_primary', '#1976d2')
+
+        self.table.setStyleSheet(f"""
+            QTableWidget {{
+                background-color: {bg_secondary};
+                alternate-background-color: {bg_tertiary};
+                border: 1px solid {border};
+                border-radius: 3px;
+                gridline-color: {border};
+                color: {text_primary};
+                font-size: 9pt;
+            }}
+            QTableWidget::item {{
+                padding: 5px;
+                border: none;
+            }}
+            QTableWidget::item:selected {{
+                background-color: {accent_primary};
+                color: white;
+            }}
+            QHeaderView::section {{
+                background-color: {panel_bg};
+                color: {text_secondary};
+                padding: 5px;
+                border: 1px solid {border};
+                font-weight: bold;
+                font-size: 9pt;
+            }}
+        """)
+
+
+    def _apply_main_splitter_theme(self): #vers 6
+        """Apply theme styling to main horizontal splitter"""
+        theme_colors = self._get_theme_colors("default")
+
+        # Extract variables FIRST
+        bg_secondary = theme_colors.get('bg_secondary', '#f8f9fa')
+        bg_primary = theme_colors.get('bg_primary', '#ffffff')
+        bg_tertiary = theme_colors.get('bg_tertiary', '#e9ecef')
+
+        self.main_splitter.setStyleSheet(f"""
+            QSplitter::handle:horizontal {{
+                background-color: {bg_secondary};
+                border: 1px solid {bg_primary};
+                border-left: 1px solid {bg_tertiary};
+                width: 8px;
+                margin: 2px 1px;
+                border-radius: 3px;
+            }}
+
+            QSplitter::handle:horizontal:hover {{
+                background-color: {bg_primary};
+                border-color: {bg_tertiary};
+            }}
+
+            QSplitter::handle:horizontal:pressed {{
+                background-color: {bg_tertiary};
+            }}
+        """)
+
+
+    def _apply_vertical_splitter_theme(self): #vers 6
+        """Apply theme styling to the vertical splitter"""
+        theme_colors = self._get_theme_colors("default")
+
+        # Extract variables FIRST
+        bg_secondary = theme_colors.get('bg_secondary', '#f8f9fa')
+        bg_tertiary = theme_colors.get('bg_tertiary', '#e9ecef')
+
+        self.left_vertical_splitter.setStyleSheet(f"""
+            QSplitter::handle:vertical {{
+                background-color: {bg_secondary};
+                border: 1px solid {bg_tertiary};
+                height: 4px;
+                margin: 1px 2px;
+                border-radius: 2px;
+            }}
+            QSplitter::handle:vertical:hover {{
+                background-color: {bg_tertiary};
+            }}
+        """)
+
+
+    def _apply_log_theme_styling(self): #vers 7
+        """Apply theme styling to the log widget"""
+        theme_colors = self._get_theme_colors("default")
+
+        # Extract variables FIRST
+        panel_bg = theme_colors.get('panel_bg', '#f0f0f0')
+        text_primary = theme_colors.get('text_primary', '#000000')
+        border = theme_colors.get('border', '#dee2e6')
+
+        self.log.setStyleSheet(f"""
+            QTextEdit {{
+                background-color: {panel_bg};
+                color: {text_primary};
+                border: 1px solid {border};
+                border-radius: 3px;
+                padding: 5px;
+                font-family: 'Consolas', 'Monaco', monospace;
+                font-size: 9pt;
+            }}
+        """)
+
+    def _apply_status_window_theme_styling(self): #vers 1
+        """Apply theme styling to the status window"""
+        theme_colors = self._get_theme_colors("default")
+        if hasattr(self, 'status_window'):
+             # Extract variables FIRST
+            panel_bg = theme_colors.get('panel_bg', '#f0f0f0')
+            text_primary = theme_colors.get('text_primary', '#000000')
+            border = theme_colors.get('border', '#dee2e6')
+
+            self.status_window.setStyleSheet(f"""
+                QWidget {{
+                    background-color: {panel_bg};
+                    border: 1px solid {border};
+                    border-radius: 3px;
+                }}
+                QLabel {{
+                    color: #{text_primary};
+                    font-weight: bold;
+                }}
+            """)
+
+
+    def _apply_file_list_window_theme_styling(self): #vers 7
+        """Apply theme styling to the file list window"""
+        theme_colors = self._get_theme_colors("default")
+
+        # Extract variables FIRST
+        bg_secondary = theme_colors.get('bg_secondary', '#f8f9fa')
+        border = theme_colors.get('border', '#dee2e6')
+        button_normal = theme_colors.get('button_normal', '#e0e0e0')
+        text_primary = theme_colors.get('text_primary', '#000000')
+        bg_tertiary = theme_colors.get('bg_tertiary', '#e9ecef')
+
+        if hasattr(self, 'tab_widget'):
+            self.tab_widget.setStyleSheet(f"""
+                QTabWidget::pane {{
+                    background-color: {bg_secondary};
+                    border: 1px solid {border};
+                    border-radius: 3px;
+                }}
+                QTabBar::tab {{
+                    background-color: {button_normal};
+                    color: {text_primary};
+                    padding: 5px 10px;
+                    margin: 2px;
+                    border-radius: 3px;
+                }}
+                QTabBar::tab:selected {{
+                    background-color: {bg_tertiary};
+                    border: 1px solid {border};
+                }}
+            """)
+
+
+    def _get_theme_colors(self, theme_name): #vers 3
+        """Get theme colors - properly connected to app_settings_system"""
+        try:
+            # Method 1: Use app_settings get_theme_colors() method
+            if hasattr(self.main_window, 'app_settings') and hasattr(self.main_window.app_settings, 'get_theme_colors'):
+                colors = self.main_window.app_settings.get_theme_colors()
+                if colors:
+                    print(f"✅ Using app_settings theme colors: {len(colors)} colors loaded")
+                    return colors
+
+            # Method 2: Try direct theme access
+            if hasattr(self.main_window, 'app_settings') and hasattr(self.main_window.app_settings, 'themes'):
+                current_theme = self.main_window.app_settings.current_settings.get("theme", "IMG_Factory")
+                theme_data = self.main_window.app_settings.themes.get(current_theme, {})
+                colors = theme_data.get('colors', {})
+                if colors:
+                    print(f"✅ Using direct theme access: {current_theme}")
+                    return colors
+
+        except Exception as e:
+            print(f"❌ Theme color lookup error: {e}")
+
+        # Fallback with proper theme variables
+        print("⚠️ Using fallback theme colors")
+        is_dark = self._is_dark_theme()
+        if is_dark:
+            return {
+                'bg_primary': '#2b2b2b', 'bg_secondary': '#3c3c3c', 'bg_tertiary': '#4a4a4a',
+                'panel_bg': '#333333', 'text_primary': '#ffffff', 'text_secondary': '#cccccc',
+                'border': '#666666', 'accent_primary': '#0078d4', 'button_normal': '#404040'
+            }
+        else:
+            return {
+                'bg_primary': '#ffffff', 'bg_secondary': '#f8f9fa', 'bg_tertiary': '#e9ecef',
+                'panel_bg': '#f0f0f0', 'text_primary': '#000000', 'text_secondary': '#495057',
+                'border': '#dee2e6', 'accent_primary': '#1976d2', 'button_normal': '#e0e0e0'
+            }
+
+
+    def apply_all_window_themes(self): #vers 1
+        """Apply theme styling to all windows"""
+        if hasattr(self, 'tearoff_button') and self.tearoff_button:
+            self._apply_tearoff_button_theme()
+
+        self._apply_table_theme_styling()
+        self._apply_log_theme_styling()
+        self._apply_vertical_splitter_theme()
+        self._apply_main_splitter_theme()
+        self._apply_status_window_theme_styling()
+        self._apply_file_list_window_theme_styling()
+
+
+    def apply_table_theme(self): #vers 1
+        """Legacy method - Apply theme styling to table and related components"""
+        # This method is called by main application for compatibility
+        self.apply_all_window_themes()
+
+
+    def _safe_log(self, message): #vers 1
+        """Safe logging that won't cause circular dependency"""
+        if hasattr(self.main_window, 'log_message') and hasattr(self.main_window, 'gui_layout'):
+            self.main_window.log_message(message)
+        else:
+            print(f"GUI Layout: {message}")
+
+    def log_message(self, message): #vers 1
+        """Add message to activity log"""
+        if self.log:
+            from PyQt6.QtCore import QDateTime
+            timestamp = QDateTime.currentDateTime().toString("hh:mm:ss")
+            self.log.append(f"[{timestamp}] {message}")
+            # Auto-scroll to bottom
+            self.log.verticalScrollBar().setValue(
+                self.log.verticalScrollBar().maximum()
+            )
+
+    # SETTINGS & CONFIGURATION
+    def apply_settings_changes(self, settings): #vers 1
+        """Apply settings changes to the GUI layout"""
+        try:
+            # Apply tab settings if they exist
+            if any(key.startswith('tab_') or key in ['main_tab_height', 'individual_tab_height', 'tab_font_size', 'tab_padding', 'tab_container_height'] for key in settings.keys()):
+                main_height = settings.get("main_tab_height", 30)
+                tab_height = settings.get("individual_tab_height", 24)
+                font_size = settings.get("tab_font_size", 9)
+                padding = settings.get("tab_padding", 4)
+                container_height = settings.get("tab_container_height", 40)
+
+                self._apply_dynamic_tab_styling(
+                    main_height, tab_height, font_size, padding, container_height
+                )
+
+            # Apply button icon settings
+            if 'show_button_icons' in settings:
+                self._update_button_icons_state(settings['show_button_icons'])
+
+            # Apply other GUI settings as needed
+            if 'table_row_height' in settings:
+                self._update_table_row_height(settings['table_row_height'])
+
+            if 'widget_spacing' in settings:
+                self._update_widget_spacing(settings['widget_spacing'])
+
+            # Apply theme changes
+            if 'theme_changed' in settings:
+                self.apply_all_window_themes()
+
+        except Exception as e:
+            if hasattr(self.main_window, 'log_message'):
+                self.main_window.log_message(f"Error applying settings changes: {str(e)}")
+
+    def _update_table_row_height(self, height): #vers 1
+        """Update table row height"""
+        try:
+            if hasattr(self, 'table') and self.table:
+                self.table.verticalHeader().setDefaultSectionSize(height)
+        except Exception:
+            pass
+
+    def _update_widget_spacing(self, spacing): #vers 1
+        """Update widget spacing"""
+        try:
+            if hasattr(self, 'main_splitter') and self.main_splitter:
+                # Update splitter spacing
+                self.main_splitter.setHandleWidth(max(4, spacing))
+        except Exception:
+            pass
+
+    # RESPONSIVE DESIGN & ADAPTIVE LAYOUT
+    def handle_resize_event(self, event): #vers 1
+        """Handle window resize to adapt button text"""
+        if self.main_splitter:
+            sizes = self.main_splitter.sizes()
+            if len(sizes) > 1:
+                right_panel_width = sizes[1]
+                self.adapt_buttons_to_width(right_panel_width)
+
+    def adapt_buttons_to_width(self, width): #vers 1
+        """Adapt button text based on available width"""
+        all_buttons = []
+        if hasattr(self, 'img_buttons'):
+            all_buttons.extend(self.img_buttons)
+        if hasattr(self, 'entry_buttons'):
+            all_buttons.extend(self.entry_buttons)
+        if hasattr(self, 'options_buttons'):
+            all_buttons.extend(self.options_buttons)
+
+        for button in all_buttons:
+            if hasattr(button, 'full_text'):
+                if width > 280:
+                    button.setText(button.full_text)
+                elif width > 200:
+                    # Medium text - remove some words
+                    text = button.full_text.replace(' via', '>').replace(' lst', '')
+                    button.setText(text)
+                elif width > 150:
+                    button.setText(button.short_text)
+                else:
+                    # Icon only mode
+                    button.setText("")
+
+    # PROGRESS & STATUS MANAGEMENT
+
+    def show_progress(self, value, text="Working..."): #vers 1
+        """Show progress using unified progress system"""
+        try:
+            from methods.progressbar_functions import show_progress as unified_show_progress
+            unified_show_progress(self.main_window, value, text)
+        except ImportError:
+            # Fallback to old system if unified not available
+            if hasattr(self.main_window, 'show_progress'):
+                self.main_window.show_progress(text, 0, 100)
+                self.main_window.update_progress(value)
+            elif hasattr(self.main_window, 'progress_bar'):
+                self.main_window.progress_bar.setValue(value)
+                self.main_window.progress_bar.setVisible(value >= 0)
+            else:
+                # Final fallback to status bar
+                if hasattr(self.main_window, 'statusBar'):
+                    self.main_window.statusBar().showMessage(f"{text} ({value}%)")
+
+    def hide_progress(self): #vers 1
+        """Hide progress using unified progress system"""
+        try:
+            from methods.progressbar_functions import hide_progress as unified_hide_progress
+            unified_hide_progress(self.main_window, "Ready")
+        except ImportError:
+            # Fallback to old system
+            if hasattr(self.main_window, 'hide_progress'):
+                self.main_window.hide_progress()
+            elif hasattr(self.main_window, 'statusBar'):
+                self.main_window.statusBar().showMessage("Ready")
+
+    def update_file_info(self, info_text): #vers 1
+        """Update file info using unified progress for completion"""
+        if hasattr(self.main_window, 'update_img_status'):
+            # Extract info from text if possible
+            if "entries" in info_text:
+                try:
+                    count = int(info_text.split()[0])
+                    self.main_window.update_img_status(entry_count=count)
+                except:
+                    pass
+
+    def create_status_bar(self): #vers 1
+        """Create status bar with unified progress integration"""
+        try:
+            from gui.status_bar import create_status_bar
+            create_status_bar(self.main_window)
+
+            # Integrate unified progress system
+            try:
+                from methods.progressbar_functions import integrate_progress_system
+                integrate_progress_system(self.main_window)
+                self.log_message("✅ Status bar with unified progress created")
+            except ImportError:
+                self.log_message("✅ Status bar created (unified progress not available)")
+
+        except ImportError:
+            # Fallback - create basic status bar
+            from PyQt6.QtWidgets import QStatusBar
+            self.main_window.setStatusBar(QStatusBar())
+            self.main_window.statusBar().showMessage("Ready")
+            self.log_message("⚠️ Basic status bar created (gui.status_bar not available)")
+        except Exception as e:
+            self.log_message(f"❌ Status bar creation error: {str(e)}")
+
+
+# LEGACY COMPATIBILITY FUNCTIONS
+
+def create_control_panel(main_window): #vers 1
+    """Create the main control panel - LEGACY FUNCTION"""
+    # Redirect to new method for compatibility
+    if hasattr(main_window, 'gui_layout'):
+        return main_window.gui_layout.create_right_panel_with_pastel_buttons()
+    return None
+
+
+__all__ = [
+    'IMGFactoryGUILayout',
+    'create_control_panel',  # Legacy compatibility
+]

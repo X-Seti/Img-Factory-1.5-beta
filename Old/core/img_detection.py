@@ -15,7 +15,7 @@ from enum import Enum
 from pathlib import Path
 
 # Import existing functions - NO NEW FUNCTIONALITY
-from core.rw_versions import get_rw_version_name, get_mdl_version_info
+from application.core.rw_versions import get_rw_version_name, get_mdl_version_info
 from methods.img_core_classes import IMGVersion, IMGEntry, IMGFile
 
 ##Methods list -

@@ -499,7 +499,7 @@ class IMGEntriesTable(QTableWidget, DragDropMixin):
         # For external drops, create temporary files and add as URLs
         try:
             import tempfile
-            from .core.Import_Export import Import_Export
+            from .core.import_export import import_export
 
             # Create temporary directory for exported files
             temp_dir = tempfile.mkdtemp(prefix="img_drag_")
@@ -508,7 +508,7 @@ class IMGEntriesTable(QTableWidget, DragDropMixin):
             for entry in selected_entries:
                 try:
                     # Export entry to temporary file
-                    temp_file_path = Import_Export.export_entry(self.current_archive, entry, output_dir=temp_dir)
+                    temp_file_path = import_export.export_entry(self.current_archive, entry, output_dir=temp_dir)
                     urls.append(QUrl.fromLocalFile(temp_file_path))
                 except Exception as e:
                     debug_logger.log_exception(LogCategory.UI, f"Failed to create temp file for {entry.name}", e)

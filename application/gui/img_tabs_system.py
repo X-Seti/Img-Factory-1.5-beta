@@ -1,4 +1,4 @@
-#this belongs in application/Gui/img_tabs_system.py - Version: 1
+#this belongs in application.gui/img_tabs_system.py - Version: 1
 # X-Seti - September12 2025 - IMG Factory 1.5 - IMG Tabs Manager
 
 """
