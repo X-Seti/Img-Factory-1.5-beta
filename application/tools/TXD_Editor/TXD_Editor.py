@@ -34,7 +34,7 @@ from PyQt6.QtWidgets import (
 )
 
 from application.common.message_box import message_box
-from application.responsive_utils import get_responsive_manager
+from application.base.responsive_utils import get_responsive_manager
 from application.styles import ModernDarkTheme
 from application.debug_system import get_debug_logger, LogCategory
 

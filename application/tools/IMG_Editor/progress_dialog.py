@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QLabel,
 from PyQt6.QtCore import Qt, pyqtSignal, QTimer
 from PyQt6.QtGui import QFont, QFontDatabase
 
-from application.responsive_utils import get_responsive_manager
+from application.base.responsive_utils import get_responsive_manager
 from application.styles import ModernDarkTheme
 
 

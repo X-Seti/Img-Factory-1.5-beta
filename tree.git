@@ -1,5 +1,17 @@
 .
 ├── application
+│   ├── base
+│   │   ├── content_area.py
+│   │   ├── Core.py
+│   │   ├── Entries_and_Selection.py
+│   │   ├── file_explorer.py
+│   │   ├── File_Operations.py
+│   │   ├── IMG_Operations.py
+│   │   ├── import_export_img_editor.py
+│   │   ├── import_export.py
+│   │   ├── __init__.py
+│   │   ├── responsive_utils.py
+│   │   └── tools_panel.py
 │   ├── common
 │   │   ├── DFF.py
 │   │   ├── __init__.py
@@ -11,7 +23,6 @@
 │   │   ├── native_xbox.py
 │   │   ├── rw_versions.py
 │   │   └── txd.py
-│   ├── content_area.py
 │   ├── core
 │   │   ├── build_all.py
 │   │   ├── build.py
@@ -25,6 +36,7 @@
 │   │   ├── export_via.py
 │   │   ├── import_via.py
 │   │   ├── impotr.py
+│   │   ├── __init__.py
 │   │   ├── inverse.py
 │   │   ├── merge.py
 │   │   ├── open.py
@@ -47,7 +59,6 @@
 │   │   ├── import_patcher.py
 │   │   └── __init__.py
 │   ├── debug_system.py
-│   ├── file_explorer.py
 │   ├── gui
 │   │   ├── cross_platform_theme.py
 │   │   ├── directory_tree_system.py
@@ -70,7 +81,6 @@
 │   │   └── ui_interaction_handlers.py
 │   ├── locale
 │   ├── logs
-│   ├── responsive_utils.py
 │   ├── shared
 │   │   ├── img_core_bridge.py
 │   │   ├── img_factory_drag_drop.py
@@ -152,65 +162,24 @@
 │   │   ├── IMG_Factory
 │   │   │   ├── archive_tab.py
 │   │   │   ├── context_menu.py
-│   │   │   ├── core
-│   │   │   │   ├── Core.py
-│   │   │   │   ├── Entries_and_Selection.py
-│   │   │   │   ├── File_Operations.py
-│   │   │   │   ├── IMG_Operations.py
-│   │   │   │   ├── import_export_img_editor.py
-│   │   │   │   ├── import_export.py
-│   │   │   │   └── __init__.py
 │   │   │   ├── drag_drop_handler.py
 │   │   │   ├── img_controller.py
-│   │   │   ├── IMG_Editor.py
 │   │   │   ├── img_editor_tool.py
 │   │   │   ├── img_factory_debug.log
 │   │   │   ├── imgfactory.py
-│   │   │   ├── imgfactory.py-old
 │   │   │   ├── imgfactory.settings.json
 │   │   │   ├── img_integrations.py
 │   │   │   ├── __init__.py
 │   │   │   ├── logs
-│   │   │   │   ├── debug_session_20250913_161545.log
-│   │   │   │   ├── debug_session_20250913_162023.log
-│   │   │   │   ├── debug_session_20250913_162737.log
-│   │   │   │   ├── debug_session_20250913_163555.log
-│   │   │   │   ├── debug_session_20250913_163716.log
-│   │   │   │   ├── debug_session_20250913_173538.log
-│   │   │   │   ├── debug_session_20250913_215511.log
-│   │   │   │   ├── debug_session_20250913_221006.log
-│   │   │   │   ├── debug_session_20250913_221440.log
-│   │   │   │   ├── debug_session_20250913_221603.log
-│   │   │   │   ├── debug_session_20250913_223325.log
-│   │   │   │   ├── debug_session_20250913_223511.log
-│   │   │   │   ├── debug_session_20250913_224532.log
-│   │   │   │   ├── debug_session_20250913_224846.log
-│   │   │   │   ├── debug_session_20250913_225445.log
-│   │   │   │   ├── debug_session_20250913_225607.log
-│   │   │   │   ├── debug_session_20250913_225620.log
-│   │   │   │   ├── debug_session_20250913_225755.log
-│   │   │   │   ├── debug_session_20250913_225826.log
-│   │   │   │   ├── debug_session_20250913_225944.log
-│   │   │   │   ├── debug_session_20250913_230508.log
-│   │   │   │   ├── debug_session_20250913_230709.log
-│   │   │   │   ├── debug_session_20250913_231024.log
-│   │   │   │   ├── debug_session_20250913_231220.log
-│   │   │   │   ├── debug_session_20250913_231558.log
-│   │   │   │   ├── debug_session_20250913_231649.log
-│   │   │   │   ├── debug_session_20250913_231741.log
-│   │   │   │   ├── debug_session_20250913_231918.log
-│   │   │   │   ├── debug_session_20250913_232106.log
-│   │   │   │   ├── debug_session_20250913_232322.log
-│   │   │   │   ├── debug_session_20250913_232619.log
-│   │   │   │   ├── debug_session_20250913_232838.log
-│   │   │   │   ├── debug_session_20250913_233109.log
-│   │   │   │   ├── debug_session_20250913_233200.log
-│   │   │   │   ├── debug_session_20250913_233750.log
-│   │   │   │   ├── debug_session_20250913_234213.log
-│   │   │   │   ├── debug_session_20250913_234737.log
-│   │   │   │   ├── debug_session_20250913_235030.log
-│   │   │   │   ├── debug_session_20250913_235517.log
-│   │   │   │   └── debug_session_20250923_160128.log
+│   │   │   │   ├── debug_session_20250923_221631.log
+│   │   │   │   ├── debug_session_20250923_221934.log
+│   │   │   │   ├── debug_session_20250923_222150.log
+│   │   │   │   ├── debug_session_20250923_223136.log
+│   │   │   │   ├── debug_session_20250923_223205.log
+│   │   │   │   ├── debug_session_20250923_223217.log
+│   │   │   │   ├── debug_session_20250923_223225.log
+│   │   │   │   ├── debug_session_20250923_223236.log
+│   │   │   │   └── debug_session_20250923_223400.log
 │   │   │   ├── progress_dialog.py
 │   │   │   ├── ui_components.py
 │   │   │   └── ui_interaction_handlers.py
@@ -230,7 +199,6 @@
 │   │   │   ├── __init__.py
 │   │   │   └── TXD_Editor.py
 │   │   └── unified_signal_handler.py
-│   ├── tools_panel.py
 │   ├── tree.git
 │   └── utils
 │       ├── app_settings_system.py
@@ -240,154 +208,8 @@
 ├── ChangeLog
 ├── imgfactory_launcher.py
 ├── LICENSE
-├── Old
-│   ├── components
-│   │   ├── Col_Creator
-│   │   │   └── col_creator.py
-│   │   ├── Col_Editor
-│   │   │   └── col_editor.py
-│   │   ├── File_Editor
-│   │   │   ├── file_dirtree_backend.py
-│   │   │   ├── file_dirtree_browser.py
-│   │   │   └── gta_file_editors.py
-│   │   ├── Ide_Editor
-│   │   │   └── ide_editor.py
-│   │   ├── Img_Creator
-│   │   │   └── img_creator.py
-│   │   ├── Project_Manager
-│   │   │   └── img_project_manager.py
-│   │   ├── Txd_Converter
-│   │   │   └── txd_converter.py
-│   │   └── Txd_Editor
-│   │       └── txd_editor.py
-│   ├── core
-│   │   ├── clean.py
-│   │   ├── close.py
-│   │   ├── compression.py
-│   │   ├── convert.py
-│   │   ├── core.py
-│   │   ├── dialogs.py
-│   │   ├── dump.py
-│   │   ├── export.py
-│   │   ├── export_via.py
-│   │   ├── file_extraction.py
-│   │   ├── file_type_filter.py
-│   │   ├── gui_search.py
-│   │   ├── imgcol_convert.py
-│   │   ├── imgcol_rename.py
-│   │   ├── imgcol_replace.py
-│   │   ├── img_creator.py
-│   │   ├── img_detection.py
-│   │   ├── img_formats.py
-│   │   ├── img_merger.py
-│   │   ├── img_split.py
-│   │   ├── img_version1.py
-│   │   ├── img_version2.py
-│   │   ├── import.py
-│   │   ├── import_via.py
-│   │   ├── impotr.py
-│   │   ├── notepad.py
-│   │   ├── open_img.py
-│   │   ├── quick_export.py
-│   │   ├── rebuild_all.py
-│   │   ├── rebuild.py
-│   │   ├── reload.py
-│   │   ├── remove.py
-│   │   ├── remove_via.py
-│   │   ├── rename.py
-│   │   ├── right_click_actions.py
-│   │   ├── rw_analysis_trigger.py
-│   │   ├── rw_unk_snapshot.py
-│   │   ├── save_entry.py
-│   │   ├── shortcuts.py
-│   │   └── utils.py
-│   ├── gui
-│   │   ├── autosave_menu.py
-│   │   ├── col_dialogs.py
-│   │   ├── col_display.py
-│   │   ├── col_gui_integration.py
-│   │   ├── col_tab_css_theme.css
-│   │   ├── cross_platform_theme.py
-│   │   ├── directory_tree_system.py
-│   │   ├── file_menu_integration.py
-│   │   ├── gui_backend.py
-│   │   ├── gui_context.py
-│   │   ├── gui_infobar.py
-│   │   ├── gui_layout.py
-│   │   ├── gui_menu.py
-│   │   ├── gui_settings.py
-│   │   ├── ide_dialog.py
-│   │   ├── imgcol_tearoff.py
-│   │   ├── __init__.py
-│   │   ├── log_panel.py
-│   │   ├── main_window.py
-│   │   ├── panel_manager.py
-│   │   ├── pastel_button_theme.py
-│   │   ├── status_bar.py
-│   │   ├── tearoff_integration.py
-│   │   ├── tear_off.py
-│   │   └── unified_button_theme.py
-│   ├── imgfactory.py
-│   ├── launch_imgfactory.py
-│   ├── locale
-│   │   └── local_settings.json
-│   ├── methods
-│   │   ├── col_core_classes.py
-│   │   ├── col_functions.py
-│   │   ├── col_integration.py
-│   │   ├── col_loader.py
-│   │   ├── colour_ui_for_loaded_img.py
-│   │   ├── col_parsing_functions.py
-│   │   ├── col_parsing_helpers.py
-│   │   ├── col_structure_manager.py
-│   │   ├── col_validation.py
-│   │   ├── dragdrop_functions.py
-│   │   ├── export_col_shared.py
-│   │   ├── export_overwrite_check.py
-│   │   ├── export_shared.py
-│   │   ├── find_dups_functions.py
-│   │   ├── ide_parser_functions.py
-│   │   ├── img_analyze.py
-│   │   ├── img_core_classes.py
-│   │   ├── img_entry_operations.py
-│   │   ├── img_import_export.py
-│   │   ├── img_import_system.py
-│   │   ├── img_integration.py
-│   │   ├── img_parsing_functions.py
-│   │   ├── img_routing_operations.py
-│   │   ├── img_shared_operations.py
-│   │   ├── img_templates.json
-│   │   ├── img_templates.py
-│   │   ├── img_validation.py
-│   │   ├── import_highlight_system.py
-│   │   ├── mirror_tab_shared.py
-│   │   ├── new_ported
-│   │   │   ├── col_file_operations.py
-│   │   │   ├── col_operations.py
-│   │   │   ├── detect_file_type_version.py
-│   │   │   ├── img_detection.py
-│   │   │   └── img_entry_operations.py
-│   │   ├── old
-│   │   │   ├── col_manager.py
-│   │   │   ├── colour_file_table.py
-│   │   │   ├── col_utilities.py
-│   │   │   ├── img_file_operations.py
-│   │   │   ├── img_open_dialog.py
-│   │   │   └── img_utils.py
-│   │   ├── populate_col_table.py
-│   │   ├── populate_img_table.py
-│   │   ├── progressbar_functions.py
-│   │   ├── refresh_table_functions.py
-│   │   ├── rw_detection.py
-│   │   ├── tab_aware_functions.py
-│   │   ├── tab_independent.py
-│   │   ├── tables_structure.py-old
-│   │   ├── tab_system.py
-│   │   └── update_ui_for_loaded_img.py
-│   ├── unix_launcher.sh
-│   └── windows_launcher.bat
 ├── README.md
 ├── setup_pyqt6_qt3d.sh
 └── tree.git
 
-45 directories, 346 files
+29 directories, 184 files

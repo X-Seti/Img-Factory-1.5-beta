@@ -90,6 +90,8 @@ def check_project_structure() -> Tuple[bool, List[str]]: #vers 1
     required_files = [
         "application/tools/IMG_Factory/imgfactory.py",
         "application/core/",
+        "application/shared/",
+        "application/base/",
         "application/gui/"
     ]
     
@@ -156,7 +158,9 @@ def setup_python_path(): #vers 1
         current_dir,  # Root directory
         application_dir,  # application directory
         application_dir / "tools" / "IMG_Factory",  # Main app directory
-        application_dir / "core",  # Core functions
+        application_dir / "shared",  # Shared functions
+        application_dir / "base",  # main core files
+        application_dir / "core",  # Core entry functions
         application_dir / "gui",  # GUI components
         application_dir / "debug",  # Debug utilities
         application_dir / "themes"  # Theme files

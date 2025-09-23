@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #this belongs in application.tools/IMG_Factory/imgfactory.py - Version: 1
 # X-Seti - September12 2025 - IMG Factory 1.5 - Main Application
 
@@ -16,13 +17,12 @@ from PyQt6.QtGui import QAction, QIcon, QFont, QPalette, QColor, QScreen
 
 # IMG Factory Core imports
 
-from application.styles import ModernDarkTheme
-from application.file_explorer import FileExplorer
-from application.tools_panel import ToolsPanel
-from application.content_area import ContentArea
-from application.status_bar import StatusBarWidget
-from application.responsive_utils import get_responsive_manager
-from application.core import IMGArchive
+from application.base.file_explorer import FileExplorer
+from application.base.tools_panel import ToolsPanel
+from application.base.content_area import ContentArea
+from application.base.status_bar import StatusBarWidget
+from application.base.responsive_utils import get_responsive_manager
+#from application.base.tools.IMG_Factory.core import cd
 from application.debug_system import get_debug_logger, LogLevel, LogCategory, debug_function
 
 from shared.populate_img_table import populate_img_table
@@ -547,7 +547,7 @@ class RenderwareModdingSuite(QMainWindow):
 
         try:
             # Refresh responsive manager with new screen info
-            from application.responsive_utils import refresh_responsive_manager
+            from application.base.responsive_utils import refresh_responsive_manager
             refresh_responsive_manager()
 
             # Update UI scaling

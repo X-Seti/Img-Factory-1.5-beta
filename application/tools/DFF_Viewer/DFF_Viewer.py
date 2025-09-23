@@ -95,7 +95,7 @@ except ImportError as e:
 
 # Suite integrations (safe to import when running inside the app)
 try:
-    from application.responsive_utils import get_responsive_manager
+    from application.base.responsive_utils import get_responsive_manager
     from application.styles import ModernDarkTheme
     from application.debug_system import get_debug_logger, LogCategory
     from application.common.message_box import message_box

@@ -8,7 +8,7 @@ from PyQt6.QtCore import Qt, pyqtSignal
 
 from application.common.message_box import message_box
 from application.styles import ModernDarkTheme
-from application.responsive_utils import get_responsive_manager
+from application.base.responsive_utils import get_responsive_manager
 from application.debug_system import get_debug_logger, LogCategory
 
 from .ui_components import FilterPanel, IMGEntriesTable

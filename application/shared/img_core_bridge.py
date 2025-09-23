@@ -17,11 +17,11 @@ if img_editor_path not in sys.path:
     sys.path.insert(0, img_editor_path)
 
 try:
-    from application.core import IMGArchive, IMGEntry, IMGVersion
-    from application.core.File_Operations import FileOperations
-    from application.core.IMG_Operations import IMGOperations
-    from application.core.import_export import ImportExport
-    from application.core.Entries_and_Selection import EntriesAndSelection
+    from application.base import IMGArchive, IMGEntry, IMGVersion
+    from application.base.File_Operations import FileOperations
+    from application.base.IMG_Operations import IMGOperations
+    from application.base.import_export import ImportExport
+    from application.base.Entries_and_Selection import EntriesAndSelection
     IMG_EDITOR_CORE_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️ IMG Editor core not available: {e}")

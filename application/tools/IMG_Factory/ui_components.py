@@ -21,7 +21,7 @@ from PyQt6.QtCore import Qt, pyqtSignal, QMimeData, QUrl
 from PyQt6.QtGui import QDrag
 import os
 
-from application.responsive_utils import get_responsive_manager
+from application.base.responsive_utils import get_responsive_manager
 from application.styles import ModernDarkTheme
 from application.debug_system import get_debug_logger, LogCategory
 from .drag_drop_handler import DragDropMixin

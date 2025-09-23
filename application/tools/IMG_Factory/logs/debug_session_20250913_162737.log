@@ -1,1 +1,0 @@
-{"timestamp": "2025-09-13T16:27:37.895012", "level": "INFO", "category": "SYSTEM", "message": "Debug session started", "source": "/home/x2/Documents/GitHub/Img-Factory1.5-beta/application/debug_system.py:80", "data": {"session_id": "2025-09-13T16:27:37.894863", "python_version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]", "platform": "linux"}, "thread": "MainThread"}
