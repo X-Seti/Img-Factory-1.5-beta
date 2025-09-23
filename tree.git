@@ -72,13 +72,14 @@
 │   ├── logs
 │   ├── responsive_utils.py
 │   ├── shared
-│   │   ├── enhanced_progress.py
 │   │   ├── img_core_bridge.py
 │   │   ├── img_factory_drag_drop.py
 │   │   ├── img_tabs_manager.py
 │   │   ├── populate_col_table.py
 │   │   ├── populate_img_table.py
 │   │   ├── progress_dialog.py
+│   │   ├── progress_function.py
+│   │   ├── progress_functions.py
 │   │   └── theme_integration.py
 │   ├── status_bar.py
 │   ├── styles.py
@@ -199,7 +200,17 @@
 │   │   │   │   ├── debug_session_20250913_231741.log
 │   │   │   │   ├── debug_session_20250913_231918.log
 │   │   │   │   ├── debug_session_20250913_232106.log
-│   │   │   │   └── debug_session_20250913_232322.log
+│   │   │   │   ├── debug_session_20250913_232322.log
+│   │   │   │   ├── debug_session_20250913_232619.log
+│   │   │   │   ├── debug_session_20250913_232838.log
+│   │   │   │   ├── debug_session_20250913_233109.log
+│   │   │   │   ├── debug_session_20250913_233200.log
+│   │   │   │   ├── debug_session_20250913_233750.log
+│   │   │   │   ├── debug_session_20250913_234213.log
+│   │   │   │   ├── debug_session_20250913_234737.log
+│   │   │   │   ├── debug_session_20250913_235030.log
+│   │   │   │   ├── debug_session_20250913_235517.log
+│   │   │   │   └── debug_session_20250923_160128.log
 │   │   │   ├── progress_dialog.py
 │   │   │   ├── ui_components.py
 │   │   │   └── ui_interaction_handlers.py
@@ -375,7 +386,8 @@
 │   │   └── update_ui_for_loaded_img.py
 │   ├── unix_launcher.sh
 │   └── windows_launcher.bat
+├── README.md
 ├── setup_pyqt6_qt3d.sh
 └── tree.git
 
-45 directories, 334 files
+45 directories, 346 files

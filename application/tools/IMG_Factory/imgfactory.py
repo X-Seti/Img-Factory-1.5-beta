@@ -22,6 +22,7 @@ from application.tools_panel import ToolsPanel
 from application.content_area import ContentArea
 from application.status_bar import StatusBarWidget
 from application.responsive_utils import get_responsive_manager
+from application.core import IMGArchive
 from application.debug_system import get_debug_logger, LogLevel, LogCategory, debug_function
 
 from shared.populate_img_table import populate_img_table
